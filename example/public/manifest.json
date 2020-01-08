@@ -1,0 +1,8 @@
+{
+  "short_name": "react-use-opentok",
+  "name": "react-use-opentok",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
