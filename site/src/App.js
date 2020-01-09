@@ -128,33 +128,39 @@ const SESSION_ID =
 const TOKEN_PUBLISHER =
   'T1==cGFydG5lcl9pZD00NjQ2MTY0MiZzaWc9MTg3MTAyMTEyM2YwZjc3MzUwN2EwNTk3NDEyN2VkMGI4NTkwNWZlMDpzZXNzaW9uX2lkPTFfTVg0ME5qUTJNVFkwTW41LU1UVTNOelkzT0RnM09EQTVNMzVuU2tWbFdFOXJVRWR4ZWpCemFsbHNkV1ZwVTJ0dUswMS1mZyZjcmVhdGVfdGltZT0xNTc3OTUzNDgzJm5vbmNlPTAuOTI5Mjc5Mzg2MzU3ODcwNiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTgwNTQ1NDgzJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9';
 
+// default options for subscribe and initPublisher
+const defaultOptions = {
+  insertMode: 'append',
+  width: '100%',
+  height: '100%',
+};
+
 const Tester = () => {
-  const [properties, methods, setCredentials] = useOpenTok({
-    publisherElement: 'publisher',
-    subscriberElement: 'subscriber',
-    screenSharingElement: 'screen-sharing',
-  });
+  const [properties, methods, setCredentials] = useOpenTok();
 
   const {
-    credentials,
+    apiKey,
+    sessionId,
+    token,
+
+    connectionId,
+    isSessionConnected,
+
     session,
+    streams,
+    connections,
+
     subscribers,
     publisher,
-    screenSharing,
-    connectionId,
-    clientsInSession,
-    publishersInSession,
   } = properties;
 
   const {
     connectSession,
     disconnectSession,
-    publishToSession,
-    unpublishToSession,
-    publishScreenSharing,
-    unpublishScreenSharing,
-    subscribeStream,
-    unsubscribeStream,
+    publish,
+    unpublish,
+    subscribe,
+    unsubscribe,
   } = methods;
 
   // 如果需要監聽 signal 事件
@@ -163,12 +169,12 @@ const Tester = () => {
   }, []);
 
   useEffect(() => {
-    if (!connectionId) return;
+    if (!isSessionConnected) return;
     session.on('signal', handleSignal);
     return () => {
       session.off('signal', handleSignal);
     };
-  }, [connectionId, handleSignal, session]);
+  }, [handleSignal, isSessionConnected, session]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -181,13 +187,13 @@ const Tester = () => {
 
     return () => {
       console.log('cleanup tester');
-      if (connectionId) {
+      if (isSessionConnected) {
         disconnectSession();
       }
     };
-  }, [connectionId, disconnectSession, session, setCredentials]);
+  }, [disconnectSession, isSessionConnected, setCredentials]);
 
-  if (!Object.keys(credentials).length) return null;
+  if (!(apiKey && sessionId && token)) return null;
 
   return (
     <>
@@ -197,7 +203,7 @@ const Tester = () => {
           Connect Session
         </Button>
 
-        {session?.currentState === 'connected' && (
+        {(session && session.currentState) === 'connected' && (
           <>
             <Button
               type="button"
@@ -210,16 +216,21 @@ const Tester = () => {
             <Button
               type="button"
               className="btn-primary"
-              onClick={publishToSession}
+              onClick={() =>
+                publish({
+                  name: 'camera',
+                  element: 'camera',
+                })
+              }
             >
               Publish
             </Button>
 
-            {publisher && (
+            {publisher.camera && (
               <Button
                 type="button"
                 className="btn-danger"
-                onClick={unpublishToSession}
+                onClick={() => unpublish({ name: 'camera' })}
               >
                 Stop Publish
               </Button>
@@ -228,16 +239,22 @@ const Tester = () => {
             <Button
               type="button"
               className="btn-primary"
-              onClick={publishScreenSharing}
+              onClick={() =>
+                publish({
+                  name: 'screen',
+                  element: 'screen',
+                  options: { ...defaultOptions, videoSource: 'screen' },
+                })
+              }
             >
               Desktop Sharing
             </Button>
 
-            {screenSharing && (
+            {publisher.screen && (
               <Button
                 type="button"
                 className="btn-danger"
-                onClick={unpublishScreenSharing}
+                onClick={() => unpublish({ name: 'screen' })}
               >
                 Stop Desktop Sharing
               </Button>
@@ -249,9 +266,9 @@ const Tester = () => {
         <ClientsList>
           在 Session 中的使用者:
           <ul>
-            {clientsInSession.map(client => (
-              <li key={client}>
-                {client} {client === connectionId && '(Me)'}
+            {connections.map(c => (
+              <li key={c.connectionId}>
+                {c.connectionId} {c.connectionId === connectionId && '(Me)'}
               </li>
             ))}
           </ul>
@@ -260,39 +277,44 @@ const Tester = () => {
         <ClientsList>
           有發佈串流的使用者：
           <ul>
-            {publishersInSession.map(publisher => (
-              <li key={publisher.streamId}>
-                {publisher.connectionId === connectionId ? (
-                  `${publisher.streamId} (${publisher.connectionId}) (Me)`
-                ) : (
-                  <>
-                    <LinkButton
-                      type="button"
-                      onClick={() => subscribeStream(publisher.streamId)}
-                    >
-                      {publisher.streamId} ({publisher.connectionId})
-                    </LinkButton>{' '}
-                    {subscribers.some(
-                      subscriber => subscriber.streamId === publisher.streamId
-                    ) && (
-                      <button
+            {streams.map(stream => {
+              const { streamId, connection } = stream;
+              return (
+                <li key={streamId}>
+                  {connection.connectionId === connectionId ? (
+                    `${streamId} (${connection.connectionId}) (Me)`
+                  ) : (
+                    <>
+                      <LinkButton
                         type="button"
-                        onClick={() => unsubscribeStream(publisher.streamId)}
+                        onClick={() =>
+                          subscribe({ stream, element: 'subscriber' })
+                        }
                       >
-                        STOP Subscribe
-                      </button>
-                    )}
-                  </>
-                )}
-              </li>
-            ))}
+                        {streamId} ({connection.connectionId})
+                      </LinkButton>{' '}
+                      {subscribers.some(
+                        subscriber => subscriber.streamId === streamId
+                      ) && (
+                        <button
+                          type="button"
+                          onClick={() => unsubscribe({ stream })}
+                        >
+                          STOP Subscribe
+                        </button>
+                      )}
+                    </>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </ClientsList>
       </div>
       <Container>
         <Subscriber id="subscriber" />
-        <Publisher id="publisher" />
-        <ScreenSharing id="screen-sharing" />
+        <Publisher id="camera" />
+        <ScreenSharing id="screen" />
       </Container>
     </>
   );
