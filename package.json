@@ -1,13 +1,11 @@
 {
   "name": "react-use-opentok",
-  "version": "1.0.0",
-  "description": "A custom React Hook to help you use opentok API",
-  "author": "PJCHENder",
+  "version": "0.0.1",
+  "description": "React Hook for @opentok/client SDK",
+  "author": "PJCHENder <pjchender@gmail.com> (https://pjchender.blogspot.com//)",
   "license": "MIT",
-  "repository": "PJCHENder/react-use-opentok",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
+  "main": "dist/react-use-opentok.cjs.js",
+  "module": "dist/react-use-opentok.esm.js",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
@@ -15,56 +13,62 @@
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "build": "rollup -c",
     "start": "rollup -c -w",
-    "prepare": "npm run build",
-    "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
+    "build": "npm run clean && rollup -c",
+    "clean": "rm -rf dist",
+    "build:site": "cd site && npm install && npm run build",
+    "deploy": "gh-pages -d site/build"
   },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "opentok",
+    "sdk",
+    "react",
+    "hook"
+  ],
   "peerDependencies": {
-    "react": "^16.9.0"
+    "react": "^16.9.0",
+    "@opentok/client": "^2.16.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "@babel/plugin-external-helpers": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-decorators": "^7.0.0",
-    "@babel/plugin-proposal-do-expressions": "^7.0.0",
-    "@babel/plugin-proposal-export-default-from": "^7.0.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
-    "@babel/plugin-proposal-function-bind": "^7.0.0",
-    "@babel/plugin-proposal-function-sent": "^7.0.0",
-    "@babel/plugin-proposal-json-strings": "^7.0.0",
-    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
-    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
-    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
-    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-syntax-import-meta": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@opentok/client": "^2.16.3",
     "@testing-library/react-hooks": "^3.2.1",
-    "babel-eslint": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "babel-eslint": "^10.0.3",
     "cross-env": "^5.2.0",
-    "eslint": "5.16.0",
+    "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.1.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-react": "^6.0.0",
-    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-flowtype": "^3.13.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.0",
-    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "eslint-plugin-standard": "^3.1.0",
     "gh-pages": "^2.0.1",
     "react": "^16.9.0",
     "react-scripts": "^3.0.1",
     "react-test-renderer": "^16.9.0",
-    "rollup": "^1.1.2",
+    "rollup": "^1.29.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-url": "^2.1.0"
-  }
+    "rollup-plugin-url": "^2.1.0",
+    "typescript": "^3.7.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pjchender/react-use-opentok.git"
+  },
+  "homepage": "https://pjchender.github.com/react-use-opentok"
 }
