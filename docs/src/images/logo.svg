@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="180" width="180">
+  <defs>
+    <ellipse id="ellipse-3" opacity="1" rx="26" ry="53.5" cx="90.98429249629476" cy="92.73762171458824"/>
+    <mask id="mask-4" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0">
+      <rect opacity="1" x="0" y="0" width="180" height="180" fill="black"/>
+      <use xlink:href="#ellipse-3" fill="white"/>
+    </mask>
+    <ellipse id="ellipse-5" opacity="1" rx="26" ry="53.5" cx="90.98429249629476" cy="92.73762171458824"/>
+    <mask id="mask-6" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0">
+      <rect opacity="1" x="0" y="0" width="180" height="180" fill="black"/>
+      <use xlink:href="#ellipse-5" fill="white"/>
+    </mask>
+  </defs>
+  <g>
+    <g opacity="1">
+      <g>
+        <path fill="rgb(97,218,251)" fill-opacity="1" opacity="1" fill-rule="evenodd" d="M91 180C139.0166015625 180 178 141.0166015625 178 93C178 44.9833984375 139.0166015625 6 91 6L4 6L4 93C4 141.0166015625 42.9833984375 180 91 180ZM159.000244140625 93C159.000244140625 55.46977996826172 128.53045654296875 25 91.000244140625 25C53.47003173828125 25 23.000244140625 55.46977996826172 23.000244140625 93C23.000244140625 130.53021240234375 53.47003173828125 161 91.000244140625 161C128.53045654296875 161 159.000244140625 130.53021240234375 159.000244140625 93Z"/>
+      </g>
+      <g opacity="1">
+        <ellipse fill="rgb(97,218,251)" fill-opacity="1" opacity="1" rx="14" ry="14" cx="91.00005142487146" cy="93.00000000009445"/>
+      </g>
+      <g transform="translate(90.98429249629476, 92.73762171458824) rotate(28.00001001179668) translate(-90.98429249629476, -92.73762171458824)" opacity="1">
+        <use xlink:href="#ellipse-3" fill-opacity="0" stroke="rgb(97,218,251)" stroke-opacity="1" stroke-width="12" stroke-linecap="butt" stroke-linejoin="miter" mask="url(#mask-4)"/>
+      </g>
+      <g transform="translate(90.98429249629476, 92.73762171458824) rotate(297.0001061965576) translate(-90.98429249629476, -92.73762171458824)" opacity="1">
+        <use xlink:href="#ellipse-5" fill-opacity="0" stroke="rgb(97,218,251)" stroke-opacity="1" stroke-width="12" stroke-linecap="butt" stroke-linejoin="miter" mask="url(#mask-6)"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -15,11 +15,14 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
     "@mdx-js/react": "^1.5.3",
+    "@theme-ui/components": "^0.2.50",
     "gatsby": "^2.18.12",
     "gatsby-plugin-theme-ui": "^0.2.53",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-use-opentok": "file:..",
     "theme-ui": "^0.2.52"
   },
   "devDependencies": {
