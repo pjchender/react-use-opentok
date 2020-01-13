@@ -51,7 +51,6 @@ const useOpenTok = () => {
 
   const handleStreamCreated = useCallback(
     event => {
-      console.log('handleStreamCreated');
       action.addStream(event.stream);
     },
     [action]
@@ -94,17 +93,17 @@ const useOpenTok = () => {
         return;
       }
 
-      const thePublisher = OT.initPublisher(element, options, handleError);
+      const newPublisher = OT.initPublisher(element, options, handleError);
 
-      session.publish(thePublisher, error => {
+      session.publish(newPublisher, error => {
         if (error) {
           handleError(error);
         } else {
           action.setPublisher({
             name,
-            publisher: thePublisher,
+            publisher: newPublisher,
           });
-          action.addStream(thePublisher.stream);
+          action.addStream(newPublisher.stream);
         }
       });
     },
@@ -130,9 +129,9 @@ const useOpenTok = () => {
   const subscribe = useCallback(
     ({ stream, element }) => {
       const { streamId } = stream;
-      const theStream = streams.find(s => s.streamId === streamId);
+      const pickedStream = streams.find(s => s.streamId === streamId);
 
-      const subscriber = session.subscribe(theStream, element, {
+      const subscriber = session.subscribe(pickedStream, element, {
         ...defaultOptions,
       });
 
