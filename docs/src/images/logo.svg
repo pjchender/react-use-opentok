@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="174" width="174">
+  <defs>
+    <ellipse id="ellipse-3" opacity="1" rx="30.271893651194624" ry="62.18222940502433" cx="86.92128404689126" cy="87.11544299268246"/>
+    <mask id="mask-4" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0">
+      <rect opacity="1" x="0" y="0" width="174" height="174" fill="black"/>
+      <use xlink:href="#ellipse-3" fill="white"/>
+    </mask>
+    <ellipse id="ellipse-5" opacity="1" rx="30.271893651194624" ry="62.18222940502433" cx="87.1479242152227" cy="87.20259614525698"/>
+    <mask id="mask-6" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0">
+      <rect opacity="1" x="0" y="0" width="174" height="174" fill="black"/>
+      <use xlink:href="#ellipse-5" fill="white"/>
+    </mask>
+  </defs>
+  <g opacity="1">
+    <g>
+      <path fill="rgb(0,0,0)" fill-opacity="1" opacity="1" fill-rule="evenodd" d="M87 174C135.0166015625 174 174 135.0166015625 174 87C174 38.983394622802734 135.0166015625 0 87 0L0 0L0 87C0 135.0166015625 38.983394622802734 174 87 174ZM155.000244140625 87C155.000244140625 49.46977996826172 124.53047180175781 19 87.00025177001953 19C49.470027923583984 19 19.0002498626709 49.46977996826172 19.0002498626709 87C19.0002498626709 124.53021240234375 49.470027923583984 155 87.00025177001953 155C124.53047180175781 155 155.000244140625 124.53021240234375 155.000244140625 87Z"/>
+    </g>
+    <g opacity="1">
+      <ellipse fill="rgb(0,0,0)" fill-opacity="1" opacity="1" rx="14" ry="14" cx="87.00005142487146" cy="87.00000000009445"/>
+    </g>
+    <g transform="translate(86.92128404689126, 87.11544299268246) rotate(28.00001001179668) translate(-86.92128404689126, -87.11544299268246)" opacity="1">
+      <use xlink:href="#ellipse-3" fill-opacity="0" stroke="rgb(0,0,0)" stroke-opacity="1" stroke-width="12" stroke-linecap="butt" stroke-linejoin="miter" mask="url(#mask-4)"/>
+    </g>
+    <g transform="translate(87.1479242152227, 87.20259614525698) rotate(297.0001061965576) translate(-87.1479242152227, -87.20259614525698)" opacity="1">
+      <use xlink:href="#ellipse-5" fill-opacity="0" stroke="rgb(0,0,0)" stroke-opacity="1" stroke-width="12" stroke-linecap="butt" stroke-linejoin="miter" mask="url(#mask-6)"/>
+    </g>
+  </g>
+</svg>
