@@ -1,14 +1,15 @@
 export default {
+  breakpoints: ['40em', '52em', '64em'],
   colors: {
-    text: '#fff',
-    background: '#000',
-    primary: '#639',
-    secondary: '#ff6347',
+    text: '#0c0c0d',
+    background: '#fffefc',
+    primary: '#61dafb',
+    secondary: '#fc929e',
   },
-  onts: {
-    body: "system-ui, sans-serif",
-    heading: "system-ui, sans-serif",
-    monospace: "Menlo, monospace",
+  fonts: {
+    body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"',
+    heading: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"',
+    monospace: 'Menlo, monospace'
   },
   fontWeights: {
     body: 400,
@@ -21,4 +22,31 @@ export default {
   },
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
+  sizes: {
+    container: 1140,
+  },
+  styles: {
+    brand: {
+      fontFamily: 'body',
+      textDecoration: 'none',
+      color: 'text',
+      px: 2,
+      fontSize: 2,
+    },
+    navlink: {
+      p: 2,
+      fontFamily: 'body',
+      color: 'text',
+      textDecoration: 'none',
+      borderRadius: 3,
+      border: 0,
+      background: '#fff',
+      '&:hover': {
+        background: '#eee',
+      },
+      cursor: 'pointer',
+      fontSize: 2,
+      outline: 0,
+    },
+  },
 }

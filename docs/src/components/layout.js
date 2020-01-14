@@ -1,10 +1,13 @@
 /** @jsx jsx */
 import React from 'react';
-import { jsx } from 'theme-ui';
+import { jsx, Styled } from 'theme-ui';
 import { Global } from '@emotion/core';
+import { Link } from 'gatsby';
+import logo from '../images/logo.svg';
+
 
 export default ({ children }) => (
-  <>
+  <Styled.root>
     <Global 
       styles={{
         body: {
@@ -14,13 +17,44 @@ export default ({ children }) => (
     />
     <header
       sx={{
-        padding: 4,
-        color: 'background',
-        backgroundColor: 'primary',
+        display: 'flex',
+        alignItems: 'center',
+        variant: 'styles.header',
+        p: 4
+      }}>
+      <img src={logo} 
+        sx={{
+          width: '36px',
+          height: '36px',
+        }}
+      />
+      <Link to='/'
+        sx={{
+          variant: 'styles.brand',
+        }}>
+        React Use OpenTok
+      </Link>
+      <div sx={{ mx: 'auto' }} />
+      <Link to='/get-started'
+        sx={{
+          variant: 'styles.navlink',
+        }}>
+        Get Started
+      </Link>
+      <Link to='/docs'
+        sx={{
+          variant: 'styles.navlink',
+        }}>
+        Docs
+      </Link>
+    </header>
+    <div
+      sx={{
+        px: 4,
+        fontFamily: 'body',
       }}
     >
-      Header
-    </header>
-    {children}
-  </>
+      {children}
+    </div>
+  </Styled.root>
 )
