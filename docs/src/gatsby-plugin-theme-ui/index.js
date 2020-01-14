@@ -34,10 +34,19 @@ export default {
       fontSize: 2,
     },
     navlink: {
+      p: 2,
       fontFamily: 'body',
-      textDecoration: 'none',
-      padding: 2,
       color: 'text',
+      textDecoration: 'none',
+      borderRadius: 3,
+      border: 0,
+      background: '#fff',
+      '&:hover': {
+        background: '#eee',
+      },
+      cursor: 'pointer',
+      fontSize: 2,
+      outline: 0,
     },
   },
 }

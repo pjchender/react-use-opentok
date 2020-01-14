@@ -50,7 +50,7 @@ export default ({ children }) => (
     </header>
     <div
       sx={{
-        padding: 4,
+        px: 4,
         fontFamily: 'body',
       }}
     >
