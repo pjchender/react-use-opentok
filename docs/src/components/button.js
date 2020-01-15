@@ -2,7 +2,7 @@
 import { jsx } from 'theme-ui';
 
 export default ({ children, ...props }) => (
-  <button 
+  <button
     {...props}
     sx={{
       p: 2,
@@ -19,4 +19,4 @@ export default ({ children, ...props }) => (
   >
     {children}
   </button>
-)
+);
