@@ -1,7 +1,6 @@
 /** @jsx jsx */
-import React from 'react';
 import { jsx, Styled } from 'theme-ui';
-import { Global } from '@emotion/core';
+import { Global, css } from '@emotion/core';
 import { Link } from 'gatsby';
 import logo from '../images/logo.svg';
 
@@ -9,23 +8,27 @@ import logo from '../images/logo.svg';
 export default ({ children }) => (
   <Styled.root>
     <Global 
-      styles={{
-        body: {
-          margin: 0
+      styles={css`
+        @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+        body {
+          margin: 0;
         }
-      }}
+      `}
     />
     <header
       sx={{
         display: 'flex',
         alignItems: 'center',
         variant: 'styles.header',
-        p: 4
+        px: 5,
+        py: 3,
       }}>
-      <img src={logo} 
+      <img 
+        src={logo}
+        alt="react-use-opentok logo"
         sx={{
-          width: '36px',
-          height: '36px',
+          width: 30,
+          height: 30,
         }}
       />
       <Link to='/'
@@ -50,8 +53,10 @@ export default ({ children }) => (
     </header>
     <div
       sx={{
-        px: 4,
+        maxWidth: 'container',
+        mx: 'auto',
         fontFamily: 'body',
+        mt: 4,
       }}
     >
       {children}

@@ -1,8 +1,15 @@
 /** @jsx jsx */
 import React, { useEffect, useCallback } from 'react';
 import { jsx } from 'theme-ui';
+import { useFormik } from 'formik';
 import useOpenTok from 'react-use-opentok';
 import Button from '../components/button';
+import {
+  Box,
+  Label,
+  Input,
+  Select,
+} from '@theme-ui/components'
 
 import {
   API_KEY,
@@ -65,25 +72,25 @@ export default () => {
     }
   }, [handleSignal, isSessionConnected, session]);
 
-  // Dummy request to get credentials
+  const formik = useFormik({
+    initialValues: {
+      apiKey: API_KEY,
+      sessionId: SESSION_ID,
+      token: TOKEN,
+    },
+    onSubmit: values => {
+      console.log(values);
+      setCredentials({...values});
+    },
+  });
   useEffect(() => {
-    setTimeout(() => {
-      setCredentials({
-        apiKey: API_KEY,
-        sessionId: SESSION_ID,
-        token: TOKEN,
-      });
-    }, 1000);
-    return () => {
-      console.log('disconnect');
-      if (isSessionConnected) {
-        disconnectSession();
-      }
-    };
-  }, [disconnectSession, isSessionConnected, setCredentials]);
-  if (!(apiKey && sessionId && token)) return null;
+    console.log(session);
+    if (session) {
+      connectSession();
+    }
+  }, [session]);
 
-  const streamGroups = streams.reduce((groups, stream) => {
+  const streamGroups = streams && streams.reduce((groups, stream) => {
     const {
       connection,
     } = stream;
@@ -97,6 +104,7 @@ export default () => {
       <div
         sx={{
           display: 'flex',
+          mb: 3,
         }}
       >
         <div
@@ -146,23 +154,39 @@ export default () => {
               }}
             ></div>
           </div>
-        </div>
-        <div
-          sx={{
-            flex: 1,
-            px: 2
-          }}
-        >
-          <div sx={{ pb: 3, fontSize: 3 }}>
-            OpenTok Actions
-          </div>
           <div>
-            <Button
-              disabled={isSessionConnected}
-              onClick={connectSession}
+            <Box
+              as='form'
+              onSubmit={formik.handleSubmit}
             >
-              Connect to Session
-            </Button>
+              <Label htmlFor='apiKey' mt={3}>API Key</Label>
+              <Input
+                name='apiKey'
+                mb={3}
+                onChange={formik.handleChange}
+                value={formik.values.apiKey}
+              />
+              <Label htmlFor='sessionId'>Session ID</Label>
+              <Input
+                name='sessionId'
+                mb={3}
+                onChange={formik.handleChange}
+                value={formik.values.sessionId}
+              />
+              <Label htmlFor='apiKey'>Token</Label>
+              <Input
+                name='token'
+                mb={3}
+                onChange={formik.handleChange}
+                value={formik.values.token}
+              />
+              <Button
+                type="submit"
+                disabled={isSessionConnected}
+              >
+                Connect to Session
+              </Button>
+            </Box>
             {(session && session.currentState) === 'connected' && (
               <>
                 <Button variant='secondary' onClick={disconnectSession}>Disconnect to Session</Button>
@@ -206,51 +230,59 @@ export default () => {
               </>
             )}
           </div>
-
-          <div sx={{ py: 3, fontSize: 3 }}>
+        </div>
+        <div
+          sx={{
+            flex: 1,
+            px: 3
+          }}
+        >
+          <div sx={{ pb: 3 }}>
             Connections
           </div>
-          <ul>
+          <ul sx={{ pl: '1rem' }}>
             {connections.map(c => (
               <li key={c.connectionId}>
                 {c.connectionId} {c.connectionId === connectionId && '(You)'}
               </li>
             ))}
           </ul>
-          <div sx={{ py: 3, fontSize: 3 }}>
+          <div sx={{ py: 3 }}>
             Streams
           </div>
-          <ul>
-            {Object.entries(streamGroups).map(([connectionId, streams]) => (
-              <li key={connectionId}>
-                {connectionId}
-                <ul>
+          <ul sx={{ pl: '1rem' }}>
+            {Object.entries(streamGroups).map(([groudId, streams]) => (
+              <li key={groudId}>
+                Connection ID: {groudId.split('-')[0]}
+                <ul sx={{ pl: '1rem' }}>
                   {streams.map(stream => {
                     const { streamId, connection } = stream;
                     return (
                       <li key={streamId}>
                         {connection.connectionId === connectionId ? (
-                          `${streamId} (You)`
+                          `Stream ID: ${streamId.split('-')[0]} (You)`
                         ) : (
                           <>
-                            {streamId}
                             <Button
+                              sx={{ p: 1, fontSize: 0, border: '1px solid', mx: 1 }}
                               onClick={() =>
                                 subscribe({ stream, element: 'subscriber' })
                               }
                             >
-                              Subscribe
+                              Watch
                             </Button>
                             {' '}
                             {subscribers.some(
                               subscriber => subscriber.streamId === streamId
                             ) && (
                               <Button
+                                sx={{ p: 1, fontSize: 0, border: '1px solid', mx: 1 }}
                                 onClick={() => unsubscribe({ stream })}
                               >
-                                STOP Subscribe
+                                STOP
                               </Button>
                             )}
+                            {`Stream ID: ${streamId.split('-')[0]}`}
                           </>
                         )}
                       </li>
@@ -262,9 +294,6 @@ export default () => {
           </ul>
         </div>
       </div>
-      
-      
-      
     </>
   );
 };
