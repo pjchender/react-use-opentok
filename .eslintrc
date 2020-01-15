@@ -2,10 +2,12 @@
   "parser": "babel-eslint",
   "extends": [
     "react-app",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
+    "plugin:jest-dom/recommended"
   ],
   "plugins": [
-    "jsx-a11y"
+    "jsx-a11y",
+    "jest-dom"
   ],
   "env": {
     "es6": true
