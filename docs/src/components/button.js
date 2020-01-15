@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import React from 'react';
 import { jsx } from 'theme-ui';
 
 export default ({ children, ...props }) => (
@@ -14,7 +13,7 @@ export default ({ children, ...props }) => (
         background: '#eee',
       },
       cursor: 'pointer',
-      fontSize: 2,
+      fontSize: 1,
       outline: 0,
     }}
   >

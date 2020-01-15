@@ -2,13 +2,13 @@ export default {
   breakpoints: ['40em', '52em', '64em'],
   colors: {
     text: '#0c0c0d',
-    background: '#fffefc',
-    primary: '#61dafb',
-    secondary: '#fc929e',
+    background: '#fff',
+    primary: '#0c0c0d',
+    secondary: '#61dafb',
   },
   fonts: {
-    body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"',
-    heading: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"',
+    body: '"Source Sans Pro", "Helvetica Neue", Arial, sans-serif',
+    heading: '"Source Sans Pro", "Helvetica Neue", Arial, sans-serif',
     monospace: 'Menlo, monospace'
   },
   fontWeights: {
@@ -20,7 +20,7 @@ export default {
     body: 1.5,
     heading: 1.125,
   },
-  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72],
+  fontSizes: [14, 16, 22, 27, 32, 48, 64, 72],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   sizes: {
     container: 1140,
@@ -30,8 +30,8 @@ export default {
       fontFamily: 'body',
       textDecoration: 'none',
       color: 'text',
+      fontSize: 1,
       px: 2,
-      fontSize: 2,
     },
     navlink: {
       p: 2,
@@ -45,8 +45,22 @@ export default {
         background: '#eee',
       },
       cursor: 'pointer',
-      fontSize: 2,
+      fontSize: 1,
       outline: 0,
+    },
+    h1: {
+      fontFamily: "heading",
+      fontWeight: "heading",
+      lineHeight: "heading",
+      fontSize: 2,
+      marginTop: 0,
+      marginBottom: 3,
+    },
+    a: {
+      color: "primary",
+      ":hover, :focus": {
+        color: "secondary",
+      },
     },
   },
 }
