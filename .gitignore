@@ -1,6 +1,7 @@
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 *.log*
+
 # dependencies
 node_modules
 
@@ -21,6 +22,9 @@ dist
 # when working with contributors
 package-lock.json
 yarn.lock
+
+# test
+coverage
 
 # runtime
 pids
