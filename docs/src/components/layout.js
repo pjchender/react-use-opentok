@@ -4,10 +4,9 @@ import { Global, css } from '@emotion/core';
 import { Link } from 'gatsby';
 import logo from '../images/logo.svg';
 
-
 export default ({ children }) => (
   <Styled.root>
-    <Global 
+    <Global
       styles={css`
         @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
         body {
@@ -22,8 +21,9 @@ export default ({ children }) => (
         variant: 'styles.header',
         px: 5,
         py: 3,
-      }}>
-      <img 
+      }}
+    >
+      <img
         src={logo}
         alt="react-use-opentok logo"
         sx={{
@@ -31,23 +31,29 @@ export default ({ children }) => (
           height: 30,
         }}
       />
-      <Link to='/'
+      <Link
+        to="/"
         sx={{
           variant: 'styles.brand',
-        }}>
+        }}
+      >
         React Use OpenTok
       </Link>
       <div sx={{ mx: 'auto' }} />
-      <Link to='/get-started'
+      <Link
+        to="/get-started"
         sx={{
           variant: 'styles.navlink',
-        }}>
+        }}
+      >
         Get Started
       </Link>
-      <Link to='/docs'
+      <Link
+        to="/docs"
         sx={{
           variant: 'styles.navlink',
-        }}>
+        }}
+      >
         Docs
       </Link>
     </header>
@@ -62,4 +68,4 @@ export default ({ children }) => (
       {children}
     </div>
   </Styled.root>
-)
+);
