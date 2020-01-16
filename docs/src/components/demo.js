@@ -3,8 +3,15 @@ import React, { useEffect, useCallback } from 'react';
 import { jsx } from 'theme-ui';
 import { useFormik } from 'formik';
 import useOpenTok from 'react-use-opentok';
-import Button from '../components/button';
-import { Box, Label, Input, Select } from '@theme-ui/components';
+import {
+  Box,
+  Label,
+  Input,
+  Select,
+  Textarea,
+  Button,
+  Badge,
+} from '@theme-ui/components';
 
 import { API_KEY, SESSION_ID, TOKEN } from '../constants';
 
@@ -42,13 +49,48 @@ export default () => {
     unpublish,
     subscribe,
     unsubscribe,
+    sendSignal,
   } = opentokMethods;
+
+  const credentialsFormik = useFormik({
+    initialValues: {
+      apiKey: API_KEY,
+      sessionId: SESSION_ID,
+      token: TOKEN,
+    },
+    onSubmit: values => {
+      setCredentials({ ...values });
+    },
+  });
+
+  const signalFormik = useFormik({
+    initialValues: {
+      type: '',
+      data: '',
+    },
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      if (values.data.length === 0) {
+        console.warn('signal data is empty');
+        return;
+      }
+
+      sendSignal({
+        ...values,
+      });
+
+      setTimeout(() => {
+        resetForm();
+        setSubmitting(false);
+      }, 400);
+    },
+  });
 
   // Listener of `signal`
   // References https://tokbox.com/developer/sdks/js/reference/SignalEvent.html
   const handleSignal = useCallback(e => {
-    console.log('signal event', e);
+    console.log('handleSignal', e);
   }, []);
+
   useEffect(() => {
     if (!isSessionConnected) {
       return;
@@ -59,16 +101,6 @@ export default () => {
     };
   }, [handleSignal, isSessionConnected, session]);
 
-  const formik = useFormik({
-    initialValues: {
-      apiKey: API_KEY,
-      sessionId: SESSION_ID,
-      token: TOKEN,
-    },
-    onSubmit: values => {
-      setCredentials({ ...values });
-    },
-  });
   useEffect(() => {
     if (session) {
       connectSession();
@@ -141,88 +173,141 @@ export default () => {
             ></div>
           </div>
           <div>
-            {(session && session.currentState) === 'connected' && (
-              <div
-                sx={{
-                  mt: 3,
-                }}
-              >
-                <Button variant="secondary" onClick={disconnectSession}>
-                  Disconnect to Session
-                </Button>
-                {!publisher.camera ? (
-                  <Button
-                    onClick={() => {
-                      publish({
-                        name: 'camera',
-                        element: 'camera',
-                      });
-                    }}
-                  >
-                    Publish your stream
+            {(session && session.currentState) === 'connected' ? (
+              <>
+                <div
+                  sx={{
+                    mt: 3,
+                  }}
+                >
+                  <Button variant="primary" onClick={disconnectSession}>
+                    Disconnect to Session
                   </Button>
-                ) : (
+
+                  {!publisher.camera ? (
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        publish({
+                          name: 'camera',
+                          element: 'camera',
+                        });
+                      }}
+                    >
+                      Publish Camera Stream
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="secondary"
+                      onClick={() => unpublish({ name: 'camera' })}
+                    >
+                      Stop Publish
+                    </Button>
+                  )}
+
+                  {!publisher.screen ? (
+                    <Button
+                      variant="primary"
+                      onClick={() =>
+                        publish({
+                          name: 'screen',
+                          element: 'screen',
+                          options: {
+                            ...defaultOpenTokOptions,
+                            videoSource: 'screen',
+                          },
+                        })
+                      }
+                    >
+                      Start Share Screen (Desktop)
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="secondary"
+                      onClick={() => unpublish({ name: 'screen' })}
+                    >
+                      Stop Share Screen (Desktop)
+                    </Button>
+                  )}
+                </div>
+
+                <Box as="form" onSubmit={signalFormik.handleSubmit}>
+                  <Label htmlFor="type" my={3}>
+                    Signal
+                  </Label>
+                  <Input
+                    name="type"
+                    placeholder="Type"
+                    onChange={signalFormik.handleChange}
+                    value={signalFormik.values.type}
+                    mb={3}
+                  />
+                  <Textarea
+                    name="data"
+                    placeholder="Data"
+                    onChange={signalFormik.handleChange}
+                    value={signalFormik.values.data}
+                    rows="6"
+                    mb={3}
+                  />
                   <Button
                     variant="secondary"
-                    onClick={() => unpublish({ name: 'camera' })}
-                  >
-                    Stop publish
-                  </Button>
-                )}
-
-                {!publisher.screen ? (
-                  <Button
-                    onClick={() =>
-                      publish({
-                        name: 'screen',
-                        element: 'screen',
-                        options: {
-                          ...defaultOpenTokOptions,
-                          videoSource: 'screen',
-                        },
-                      })
+                    type="submit"
+                    sx={{
+                      display: 'block',
+                      marginLeft: 'auto',
+                    }}
+                    disabled={
+                      !signalFormik.values.data.length ||
+                      signalFormik.isSubmitting
                     }
                   >
-                    Start Share Screen (Desktop)
+                    Send Signal
                   </Button>
-                ) : (
-                  <Button
-                    variant="secondary"
-                    onClick={() => unpublish({ name: 'screen' })}
-                  >
-                    Stop Share Screen (Desktop)
-                  </Button>
-                )}
-              </div>
+                </Box>
+              </>
+            ) : (
+              <Box as="form" onSubmit={credentialsFormik.handleSubmit}>
+                <Label htmlFor="apiKey" mt={3} mb={1}>
+                  API Key
+                </Label>
+                <Input
+                  name="apiKey"
+                  mb={3}
+                  onChange={credentialsFormik.handleChange}
+                  value={credentialsFormik.values.apiKey}
+                />
+                <Label htmlFor="sessionId" mb={1}>
+                  Session ID
+                </Label>
+                <Input
+                  name="sessionId"
+                  mb={3}
+                  onChange={credentialsFormik.handleChange}
+                  value={credentialsFormik.values.sessionId}
+                />
+                <Label htmlFor="apiKey" mb={1}>
+                  Token
+                </Label>
+                <Input
+                  name="token"
+                  mb={3}
+                  onChange={credentialsFormik.handleChange}
+                  value={credentialsFormik.values.token}
+                />
+                <Button
+                  variant="secondary"
+                  type="submit"
+                  disabled={isSessionConnected}
+                  sx={{
+                    display: 'block',
+                    marginLeft: 'auto',
+                  }}
+                >
+                  Connect to Session
+                </Button>
+              </Box>
             )}
-            <Box as="form" onSubmit={formik.handleSubmit}>
-              <Label htmlFor="apiKey" mt={3}>
-                API Key
-              </Label>
-              <Input
-                name="apiKey"
-                mb={3}
-                onChange={formik.handleChange}
-                value={formik.values.apiKey}
-              />
-              <Label htmlFor="sessionId">Session ID</Label>
-              <Input
-                name="sessionId"
-                mb={3}
-                onChange={formik.handleChange}
-                value={formik.values.sessionId}
-              />
-              <Label htmlFor="apiKey">Token</Label>
-              <Input
-                name="token"
-                mb={3}
-                onChange={formik.handleChange}
-                value={formik.values.token}
-              />
-              <Button type="submit" disabled={isSessionConnected}>
-                Connect to Session
-              </Button>
-            </Box>
           </div>
         </div>
 
@@ -237,7 +322,12 @@ export default () => {
           <ul sx={{ pl: '1rem', mt: 2 }}>
             {connections.map(c => (
               <li key={c.connectionId}>
-                {c.connectionId} {c.connectionId === connectionId && '(You)'}
+                {c.connectionId}{' '}
+                {c.connectionId === connectionId && (
+                  <Badge variant="outline" ml={1}>
+                    You
+                  </Badge>
+                )}
               </li>
             ))}
           </ul>
@@ -246,7 +336,11 @@ export default () => {
             {Object.entries(streamGroups).map(([groupId, streams]) => (
               <li key={groupId}>
                 Connection ID: {groupId.split('-')[0]}{' '}
-                {groupId === connectionId && '(You)'}
+                {groupId === connectionId && (
+                  <Badge variant="outline" ml={1}>
+                    You
+                  </Badge>
+                )}
                 <ul sx={{ pl: '1rem', py: 2 }}>
                   {streams.map(stream => {
                     const { streamId, connection } = stream;
@@ -263,6 +357,7 @@ export default () => {
                               subscriber => subscriber.streamId === streamId
                             ) ? (
                               <Button
+                                variant="secondary"
                                 sx={{
                                   p: 1,
                                   fontSize: 0,
@@ -275,6 +370,7 @@ export default () => {
                               </Button>
                             ) : (
                               <Button
+                                variant="primary"
                                 sx={{
                                   p: 1,
                                   fontSize: 0,

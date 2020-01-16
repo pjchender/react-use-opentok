@@ -24,6 +24,8 @@ const useOpenTok = () => {
     sessionId,
     token,
 
+    isSessionConnected,
+
     session,
     subscribers,
     publisher,
@@ -153,6 +155,30 @@ const useOpenTok = () => {
     [action, session, subscribers]
   );
 
+  const sendSignal = useCallback(
+    ({ type, data, completionHandler }) => {
+      if (!isSessionConnected) {
+        console.warn('Session is not connected');
+        return;
+      }
+
+      let signal = { data };
+
+      if (typeof type === 'string' && type.length > 0) {
+        signal.type = type;
+      }
+
+      session.signal(signal, error => {
+        if (error) {
+          console.warn('signal error: ' + error.message);
+        } else if (typeof completionHandler === 'function') {
+          completionHandler();
+        }
+      });
+    },
+    [isSessionConnected, session]
+  );
+
   useEffect(() => {
     if (!(apiKey && sessionId && token)) return;
 
@@ -182,6 +208,7 @@ const useOpenTok = () => {
       unpublish,
       subscribe,
       unsubscribe,
+      sendSignal,
     },
     action.setCredentials,
   ];
