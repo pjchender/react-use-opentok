@@ -1,8 +1,8 @@
 {
   "name": "react-use-opentok",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "React Hook for @opentok/client SDK",
-  "author": "PJCHENder <pjchender@gmail.com> (https://pjchender.blogspot.com//)",
+  "author": "PJCHENder <pjchender@gmail.com> (https://pjchender.blogspot.com)",
   "license": "MIT",
   "main": "dist/react-use-opentok.cjs.js",
   "module": "dist/react-use-opentok.esm.js",
@@ -11,11 +11,11 @@
     "npm": ">=5"
   },
   "scripts": {
-    "test": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
     "start": "rollup -c -w",
     "build": "npm run clean && rollup -c",
     "clean": "rm -rf dist",
+    "test": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
     "build:site": "cd site && npm install && npm run build",
     "deploy": "gh-pages -d site/build"
   },
@@ -23,11 +23,20 @@
     "dist"
   ],
   "keywords": [
+    "tokbox",
     "opentok",
     "sdk",
     "react",
     "hook"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pjchender/react-use-opentok.git"
+  },
+  "homepage": "https://pjchender.github.com/react-use-opentok",
+  "bugs": {
+    "url": "https://pjchender.github.com/react-use-opentok/issues"
+  },
   "peerDependencies": {
     "react": "^16.12.0",
     "@opentok/client": "^2.16.3"
@@ -67,10 +76,5 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-url": "^3.0.1",
     "typescript": "^3.7.4"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pjchender/react-use-opentok.git"
-  },
-  "homepage": "https://pjchender.github.com/react-use-opentok"
+  }
 }
