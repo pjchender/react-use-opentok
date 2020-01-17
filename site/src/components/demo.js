@@ -117,6 +117,9 @@ export default () => {
       return groups;
     }, {});
 
+
+  if (typeof window === 'undefined') return null;
+
   return (
     <>
       <div
