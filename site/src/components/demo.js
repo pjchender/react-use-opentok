@@ -12,6 +12,7 @@ import {
   Button,
   Badge,
 } from '@theme-ui/components';
+import ConsoleFeed from './console-feed';
 
 import { API_KEY, SESSION_ID, TOKEN } from '../constants';
 
@@ -308,6 +309,7 @@ export default () => {
                 </Button>
               </Box>
             )}
+            <ConsoleFeed />
           </div>
         </div>
 
