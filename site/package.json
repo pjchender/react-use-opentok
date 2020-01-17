@@ -1,29 +1,44 @@
 {
-  "name": "react-use-opentok-example",
-  "homepage": "https://PJCHENder.github.io/react-use-opentok",
-  "version": "0.0.0",
-  "license": "MIT",
+  "name": "gatsby-starter-hello-world",
   "private": true,
-  "dependencies": {
-    "prop-types": "^15.6.2",
-    "react": "file:../node_modules/react",
-    "react-dom": "^16.9.0",
-    "react-scripts": "^3.0.1",
-    "react-use-opentok": "file:.."
-  },
+  "description": "A simplified bare-bones starter for Gatsby",
+  "version": "0.1.0",
+  "license": "MIT",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "dependencies": {
+    "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
+    "@mdx-js/mdx": "^1.5.3",
+    "@mdx-js/react": "^1.5.3",
+    "@theme-ui/components": "^0.2.50",
+    "formik": "^2.1.2",
+    "gatsby": "^2.18.12",
+    "gatsby-plugin-mdx": "^1.0.67",
+    "gatsby-plugin-theme-ui": "^0.2.53",
+    "react": "file:../node_modules/react",
+    "react-dom": "^16.12.0",
+    "react-use-opentok": "file:..",
+    "theme-ui": "^0.2.52"
+  },
   "devDependencies": {
-    "styled-components": "^4.4.1"
+    "prettier": "^1.19.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }
