@@ -1,20 +1,21 @@
 import { useReducer, useMemo } from 'react';
 
 const initialState = {
-  // Credentials
+  // credentials
   apiKey: undefined,
   sessionId: undefined,
   token: undefined,
 
+  // connection info
   connectionId: undefined,
   isSessionConnected: false,
 
+  // connected data
   session: undefined,
-  subscribers: [],
-  publisher: {},
-
   connections: [],
   streams: [],
+  subscribers: [],
+  publisher: {},
 };
 
 // ACTION TYPE
