@@ -8,6 +8,7 @@ node_modules
 # builds
 build
 dist
+public
 
 # misc
 .DS_Store
