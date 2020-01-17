@@ -1,4 +1,7 @@
 # react-use-opentok
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [NPM Badge]
 
@@ -120,6 +123,18 @@ $ npm start         # start gatsby develope server
 ## Contributors
 
 Thanks goes to these wonderful people (emoji key):
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://andyyou.github.io/"><img src="https://avatars0.githubusercontent.com/u/665690?v=4" width="100px;" alt=""/><br /><sub><b>andyyou</b></sub></a><br /><a href="https://github.com/pjchender/react-use-opentok/commits?author=andyyou" title="Code">💻</a> <a href="#design-andyyou" title="Design">🎨</a> <a href="#example-andyyou" title="Examples">💡</a> <a href="#maintenance-andyyou" title="Maintenance">🚧</a> <a href="#ideas-andyyou" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/pjchender/react-use-opentok/pulls?q=is%3Apr+reviewed-by%3Aandyyou" title="Reviewed Pull Requests">👀</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 [https://allcontributors.org/]
 
