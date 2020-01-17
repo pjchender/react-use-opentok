@@ -40,7 +40,7 @@ export default ({ children }) => (
         React Use OpenTok
       </Link>
       <div sx={{ mx: 'auto' }} />
-      <Link
+      {/* <Link
         to="/get-started"
         sx={{
           variant: 'styles.navlink',
@@ -55,7 +55,7 @@ export default ({ children }) => (
         }}
       >
         Docs
-      </Link>
+      </Link> */}
     </header>
     <div
       sx={{
