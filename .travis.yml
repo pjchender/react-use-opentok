@@ -1,3 +1,15 @@
 language: node_js
 node_js:
-  - 8
+- 12
+jobs:
+  include:
+  - stage: release
+    node_js: lts/*
+    deploy:
+      provider: script
+      script: npx -p @semantic-release/changelog -p @semantic-release/git -p semantic-release
+        semantic-release
+env:
+  global:
+  - secure: GTLvhMZO36NLXo4srD8O/1aiFfoLhS6YFjjzjmnzm8+wxX/nfd1xEZjqEjEpAwmQzZu+c9+NfI78uOy4K8op+g4Sl6WEQWvl+5AJ6JxRmFhNYZVfxQF772EP3bcUA1UCKmhSxX6DfMF5TehtAnSuNaMVFz5kN38WxBK5/wdKslkJaAjWeLuFOvGw/MmC38TXTNgWx3SmX8L1wBm8hlcXDF2LPssiIDEQ/2eM2HquyGN9aFYRegirNB49YFeWTOjoe5rK6r+jUliDigQcIdSNCBNuQ40KTj9Fj/fbrpnN2UKXlpfvBv9AcaLdDdXIekVw0BQfzmZgni+9SlcpmTVin0SX22uUluCDqx1Ckfiikidjlnx9DDzGnrhYEde8o5WojgAKbpSDF7AShge/GvdsLNX4qNmUHMuN2L5Ja8pHqA7R39Hy+WQqWG96Ot0HMUxJY9v9VOJTbFTOyA3E+cx1Xr9XzeCTLFRasOairH9BsOqSBozrn0C4p0kRBalPWZp+NNpF8cn1ntyEPvvA/kYfcPL1HDkcmZCh5jVMN2IrJmGaPZKWpCcSCzQ5aYsbAa6fL/jzTnOojLkzHADdmW4FkDy7nzOajZcAtqXM/o24dpg+VV2CroqygOD5NRxB24Quu0BijD+wjocF41ZQWw1w7rYu1YVgGy/y8wKAWOiXAdw=
+  - secure: qTtHu3dTzA9R6THHFFkyA4H8dzFfGFMQv2Q5KgBLW/NXuPiGHCVmJXxhXagtTj9/1LXcxn9KnZlTXahtxkFJ1/QZa0GyZCDcZ7ifdVOgSh6b8odpurMqvnld/CgYJScUS/t1h+ij3xPRKCffCv9o7qBmmHT91jOqrukm5vFprRZf7XL3XHTCZ/J5uMaHG7hNqMCJVqMZY4cAC7ohEci6kt2GDDGjLPO2KqhwcaIht1gaQHaXhePPA38U9bYNb3eDNaJ015kEZ6bvoSBuYOJlOZSGsgoZ2h82g13kGZqzlYedrxBCcmzTKmOEFxboCDdEP3fcz3R1MIYtOy+LapWIM/Wh9R44sIQI9H3HMcgTMK9MyBWsZzdcp0GJ+fF0VH2Ldfu9WCq02/8ejT6L2Tv9y3VOVDTLlue7x74Gxwi2sl91aTt+CzlcdFjs5A9/cjRSwfP1ZeQF5GnVOoiZBe2tC6rO/o1f5VqFElhFIqhtorhSWlw9ReHW36ELIqX03eSDPZRjxfCwIgVCzZ7kuiE5qSBmhYwdJHa7jvrXSndNRss13TZ+tOaZczYHhagAiG5MhSxlon39EoqIazQK9opvKcuQ8biqd0c8MS/jAHCSjhWxFZ2flKpXvIXMZS9QYj0jDIbiwBD0F7EHlS67kIaV1VGZ4YDQWMyqtaA4MRveMsQ=
