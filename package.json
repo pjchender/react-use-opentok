@@ -1,6 +1,6 @@
 {
   "name": "react-use-opentok",
-  "version": "0.1.1",
+  "version": "0.0.0-development",
   "description": "React Hook for @opentok/client SDK",
   "contributors": [
     "PJCHENder <pjchender@gmail.com> (https://pjchender.blogspot.com)",
@@ -20,7 +20,8 @@
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "build:site": "cd site && npm install && npm run build",
-    "deploy": "gh-pages -d site/public"
+    "deploy": "gh-pages -d site/public",
+    "semantic-release": "semantic-release"
   },
   "files": [
     "dist"
@@ -52,6 +53,8 @@
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-url": "^4.0.1",
+    "@semantic-release/changelog": "^3.0.6",
+    "@semantic-release/git": "^8.0.0",
     "@testing-library/jest-dom": "^5.0.0",
     "@testing-library/react": "^9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
@@ -78,6 +81,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-url": "^3.0.1",
+    "semantic-release": "^16.0.2",
     "typescript": "^3.7.5"
   }
 }

@@ -98,7 +98,19 @@ You can get all utilities of [@opentok/client](https://www.npmjs.com/package/@op
 const [opentokProps, opentokMethods, setCredentials] = useOpenTok();
 ```
 
-### connect to
+### connect to session
+
+### show all connections in the session
+
+### publish camera stream
+
+### start desktop sharing
+
+### show streams in the session
+
+### subscribe to streams
+
+### handle signal
 
 ## Development
 
