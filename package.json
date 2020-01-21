@@ -21,7 +21,8 @@
     "test:watch": "react-scripts test --env=jsdom",
     "build:site": "cd site && npm install && npm run build",
     "deploy": "gh-pages -d site/public",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "semantic-release:dry": "npx semantic-release --dry-run --no-ci"
   },
   "files": [
     "dist"
