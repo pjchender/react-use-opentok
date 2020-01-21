@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/pjchender/react-use-opentok/compare/v1.0.1...v1.0.2) (2020-01-21)
+
+
+### Bug Fixes
+
+* **ci:** update travis ci config for skip_cleanup ([f00c1e6](https://github.com/pjchender/react-use-opentok/commit/f00c1e677c99c9007ed7f5f316e913c6f314cb7d))
+
 ## [1.0.1](https://github.com/pjchender/react-use-opentok/compare/v1.0.0...v1.0.1) (2020-01-21)
 
 
