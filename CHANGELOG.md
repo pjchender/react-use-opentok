@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/pjchender/react-use-opentok/compare/v1.0.0...v1.0.1) (2020-01-21)
+
+
+### Bug Fixes
+
+* **ci:** update travis ci ([0d4b668](https://github.com/pjchender/react-use-opentok/commit/0d4b668ed314ce5e574dcbcf2663585d228c18cf))
+
 # 1.0.0 (2020-01-21)
 
 
