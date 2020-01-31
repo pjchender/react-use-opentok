@@ -75,7 +75,6 @@ const useOpenTok = () => {
           connectionId,
           isSessionConnected: true,
         });
-        console.log('---[Session Connected]---');
       }
     });
   }, [action, session, token]);
