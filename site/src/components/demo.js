@@ -60,6 +60,7 @@ export default () => {
       token: TOKEN,
     },
     onSubmit: values => {
+      // STEP 1-1: set credentials to init opentok session
       setCredentials({ ...values });
     },
   });
@@ -102,6 +103,7 @@ export default () => {
     };
   }, [handleSignal, isSessionConnected, session]);
 
+  // STEP 1-2: session will be initiated after credentials set
   useEffect(() => {
     if (session) {
       connectSession();

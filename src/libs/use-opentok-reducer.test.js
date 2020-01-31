@@ -1,15 +1,13 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useOpenTokReducer from './use-opentok-reducer';
-
-const mockData = {
-  apiKey: '46464646',
-
-  id: '0cf8a620-4e82-4ced-8133-b13fb12c4a1a',
-  sessionId: '1_MX40NjQ2MTY0Mn5',
-  token: 'T1==cGFydG5lcl9pZD00NjQ2MT',
-
-  publisherName: 'camera',
-};
+import {
+  MOCK_CREDENTIALS,
+  MOCK_STREAM,
+  MOCK_PUBLISHER,
+  MOCK_INIT_PUBLISHER,
+  MOCK_SUBSCRIBER,
+  MOCK_CONNECTION,
+} from './../__mocks__/mockData';
 
 describe('test useOpenTokReducer', () => {
   test('setCredential', () => {
@@ -28,11 +26,7 @@ describe('test useOpenTokReducer', () => {
     });
 
     act(() => {
-      setCredentials({
-        apiKey: mockData.apiKey,
-        sessionId: mockData.sessionId,
-        token: mockData.token,
-      });
+      setCredentials(MOCK_CREDENTIALS);
     });
 
     const [state] = result.current;
@@ -42,14 +36,11 @@ describe('test useOpenTokReducer', () => {
       apiKey,
       sessionId,
       token,
-    }).toEqual({
-      apiKey: mockData.apiKey,
-      sessionId: mockData.sessionId,
-      token: mockData.token,
-    });
+    }).toEqual(MOCK_CREDENTIALS);
   });
 
   test('addConnection and removeConnection', () => {
+    const { id, connectionId } = MOCK_CONNECTION;
     const { result } = renderHook(() => useOpenTokReducer());
     const [initialState, actions] = result.current;
     const { addConnection, removeConnection } = actions;
@@ -59,8 +50,8 @@ describe('test useOpenTokReducer', () => {
 
     act(() => {
       addConnection({
-        id: mockData.id,
-        connectionId: mockData.id,
+        id,
+        connectionId,
       });
     });
 
@@ -72,8 +63,8 @@ describe('test useOpenTokReducer', () => {
 
     act(() => {
       removeConnection({
-        id: mockData.id,
-        connectionId: mockData.id,
+        id,
+        connectionId,
       });
     });
 
@@ -85,6 +76,7 @@ describe('test useOpenTokReducer', () => {
   });
 
   test('addStream and removeStream', () => {
+    const { id, streamId } = MOCK_STREAM;
     const { result } = renderHook(() => useOpenTokReducer());
     const [initialState, actions] = result.current;
     const { addStream, removeStream } = actions;
@@ -94,8 +86,8 @@ describe('test useOpenTokReducer', () => {
 
     act(() => {
       addStream({
-        id: mockData.id,
-        streamId: mockData.id,
+        id,
+        streamId,
       });
     });
 
@@ -105,8 +97,8 @@ describe('test useOpenTokReducer', () => {
 
     act(() => {
       removeStream({
-        id: mockData.id,
-        streamId: mockData.id,
+        id,
+        streamId,
       });
     });
 
@@ -125,29 +117,27 @@ describe('test useOpenTokReducer', () => {
 
     act(() => {
       setPublisher({
-        name: mockData.publisherName,
-        publisher: {
-          id: mockData.id,
-        },
+        name: MOCK_INIT_PUBLISHER.name,
+        publisher: MOCK_PUBLISHER,
       });
     });
 
     const [stateAfterSetPublisher] = result.current;
 
     expect(stateAfterSetPublisher.publisher).toEqual({
-      [mockData.publisherName]: expect.any(Object),
+      [MOCK_INIT_PUBLISHER.name]: expect.any(Object),
     });
 
     act(() => {
       removePublisher({
-        name: mockData.publisherName,
+        name: MOCK_INIT_PUBLISHER.name,
       });
     });
 
     const [stateAfterRemovePublisher] = result.current;
 
     expect(stateAfterRemovePublisher.publisher).toEqual({
-      [mockData.publisherName]: null,
+      [MOCK_INIT_PUBLISHER.name]: null,
     });
   });
 
@@ -160,10 +150,7 @@ describe('test useOpenTokReducer', () => {
     expect(initialSubscribers).toEqual([]);
 
     act(() => {
-      addSubscriber({
-        id: mockData.id,
-        streamId: mockData.id,
-      });
+      addSubscriber(MOCK_SUBSCRIBER);
     });
 
     const [stateAfterAddSubscriber] = result.current;
@@ -173,9 +160,7 @@ describe('test useOpenTokReducer', () => {
     );
 
     act(() => {
-      removeSubscriber({
-        streamId: mockData.id,
-      });
+      removeSubscriber(MOCK_SUBSCRIBER);
     });
 
     const [stateAfterRemoveSubscribe] = result.current;
@@ -194,7 +179,7 @@ describe('test useOpenTokReducer', () => {
 
     act(() => {
       update({
-        connectionId: mockData.id,
+        connectionId: MOCK_CONNECTION.connectionId,
         isSessionConnected: true,
       });
     });
@@ -202,6 +187,6 @@ describe('test useOpenTokReducer', () => {
     const [stateAfterUpdate] = result.current;
 
     expect(stateAfterUpdate.isSessionConnected).toBeTruthy();
-    expect(stateAfterUpdate.connectionId).toBe(mockData.id);
+    expect(stateAfterUpdate.connectionId).toBe(MOCK_CONNECTION.connectionId);
   });
 });
