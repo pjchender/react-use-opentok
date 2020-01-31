@@ -2,6 +2,7 @@
 
 [![Build status](https://badgen.net/travis/pjchender/react-use-opentok)](https://travis-ci.com/pjchender/react-use-opentok)
 [![version](https://img.shields.io/npm/v/react-use-opentok.svg)](https://www.npmjs.com/package/react-use-opentok)
+[![Coverage Status](https://coveralls.io/repos/github/pjchender/react-use-opentok/badge.svg?branch=master)](https://coveralls.io/github/pjchender/react-use-opentok?branch=master)
 [![license](https://img.shields.io/github/license/pjchender/react-use-opentok.svg)](https://github.com/pjchender/react-use-opentok/blob/master/LICENSE)
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg)](#contributors)
 
