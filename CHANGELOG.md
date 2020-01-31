@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/pjchender/react-use-opentok/compare/v1.0.3...v1.0.4) (2020-01-31)
+
+
+### Bug Fixes
+
+* integrate with coveralls and add coveralls badge ([#7](https://github.com/pjchender/react-use-opentok/issues/7)) ([e504f1b](https://github.com/pjchender/react-use-opentok/commit/e504f1bd29e25f6201514fcdaf0843b308b4fdd8))
+
 ## [1.0.3](https://github.com/pjchender/react-use-opentok/compare/v1.0.2...v1.0.3) (2020-01-31)
 
 
