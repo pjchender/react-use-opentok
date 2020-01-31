@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/pjchender/react-use-opentok/compare/v1.0.2...v1.0.3) (2020-01-31)
+
+
+### Bug Fixes
+
+* add test for react-use-opentok ([fda06fa](https://github.com/pjchender/react-use-opentok/commit/fda06fa9c6f5d688f00d9e561185d94592737749))
+* update packages ([8c7d21d](https://github.com/pjchender/react-use-opentok/commit/8c7d21d07bc314cefe8e54562ccb4da904595252))
+
 ## [1.0.2](https://github.com/pjchender/react-use-opentok/compare/v1.0.1...v1.0.2) (2020-01-21)
 
 
