@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/pjchender/react-use-opentok/compare/v1.0.4...v1.0.5) (2020-02-03)
+
+
+### Bug Fixes
+
+* add rollup-plugin-terser for minifying bundle files ([#8](https://github.com/pjchender/react-use-opentok/issues/8)) ([4bdaa9e](https://github.com/pjchender/react-use-opentok/commit/4bdaa9e110fbb9425ff7ef639d290ffd89f903bd))
+
 ## [1.0.4](https://github.com/pjchender/react-use-opentok/compare/v1.0.3...v1.0.4) (2020-01-31)
 
 
