@@ -7,8 +7,8 @@
     "Andyyou <andyyu0920@gmail.com> (http://andyyou.github.io/)"
   ],
   "license": "MIT",
-  "main": "dist/react-use-opentok.cjs.js",
-  "module": "dist/react-use-opentok.esm.js",
+  "main": "dist/react-use-opentok.cjs.min.js",
+  "module": "dist/react-use-opentok.esm.min.js",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
@@ -83,6 +83,7 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-terser": "^5.2.0",
     "rollup-plugin-url": "^3.0.1",
     "semantic-release": "^17.0.1",
     "typescript": "^3.7.5"
