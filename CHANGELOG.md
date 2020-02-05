@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/pjchender/react-use-opentok/compare/v1.0.5...v2.0.0) (2020-02-05)
+
+
+* refactor!: add initSessionAndConnect and remove setCredentials in openTokMethods (#9) ([845735c](https://github.com/pjchender/react-use-opentok/commit/845735ca245fb660fac7bc596d8797c8785c3188)), closes [#9](https://github.com/pjchender/react-use-opentok/issues/9) [#9](https://github.com/pjchender/react-use-opentok/issues/9)
+
+
+### BREAKING CHANGES
+
+* add initSessionAndConnect and remove setCredentials in API
+
 ## [1.0.5](https://github.com/pjchender/react-use-opentok/compare/v1.0.4...v1.0.5) (2020-02-03)
 
 
