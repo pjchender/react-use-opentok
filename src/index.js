@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import useOpenTokReducer from './libs/use-opentok-reducer';
 import useSessionEventHandler from './libs/use-session-event-handler';
 import OT from '@opentok/client';
@@ -20,10 +20,6 @@ const useOpenTok = () => {
   const [state, action] = useOpenTokReducer();
 
   const {
-    apiKey,
-    sessionId,
-    token,
-
     isSessionConnected,
 
     session,
@@ -32,10 +28,6 @@ const useOpenTok = () => {
 
     streams,
   } = state;
-
-  const handleSessionDisconnected = useCallback(() => {
-    window.location.reload();
-  }, []);
 
   const handleConnectionCreated = useCallback(
     event => {
@@ -65,19 +57,56 @@ const useOpenTok = () => {
     [action]
   );
 
-  const connectSession = useCallback(() => {
-    session.connect(token, error => {
-      if (error) {
-        handleError(error);
-      } else {
-        const connectionId = session.connection.connectionId;
-        action.update({
-          connectionId,
-          isSessionConnected: true,
+  const initSession = useCallback(
+    ({ apiKey, sessionId, sessionOptions }) =>
+      new Promise(resolve => {
+        const session = OT.initSession(apiKey, sessionId, sessionOptions);
+        action.update({ session });
+        resolve(session);
+      }),
+    [action]
+  );
+
+  const connectSession = useCallback(
+    (token, sessionToConnect = session) =>
+      new Promise((resolve, reject) => {
+        if (!token) {
+          reject('[react-use-opentok] token does not exist.');
+        }
+
+        if (!sessionToConnect) {
+          reject('[react-use-opentok] session does not exist.');
+        }
+
+        sessionToConnect.connect(token, error => {
+          if (error) {
+            handleError(error);
+            reject(error);
+          } else {
+            const connectionId = sessionToConnect.connection.connectionId;
+            action.update({
+              connectionId,
+              isSessionConnected: true,
+            });
+            resolve(connectionId);
+          }
         });
-      }
-    });
-  }, [action, session, token]);
+      }),
+    [action, session]
+  );
+
+  const initSessionAndConnect = useCallback(
+    async ({ apiKey, sessionId, token, sessionOptions }) => {
+      const newSession = await initSession({
+        apiKey,
+        sessionId,
+        sessionOptions,
+      });
+
+      await connectSession(token, newSession);
+    },
+    [connectSession, initSession]
+  );
 
   const disconnectSession = useCallback(() => {
     session.disconnect();
@@ -90,8 +119,7 @@ const useOpenTok = () => {
   const publish = useCallback(
     ({ name, element, options = defaultOptions }) => {
       if (publisher[name]) {
-        console.warn(`The publisher(${name}) is already existed`);
-        return;
+        throw new Error(`The publisher(${name}) is already existed`);
       }
 
       const newPublisher = OT.initPublisher(element, options, handleError);
@@ -114,8 +142,7 @@ const useOpenTok = () => {
   const unpublish = useCallback(
     ({ name }) => {
       if (!(publisher && publisher[name])) {
-        console.error(`[unpublish] publisher[${name}] is undefined`);
-        return;
+        throw new Error(`[unpublish] publisher[${name}] is undefined`);
       }
 
       const stream = publisher && publisher[name] && publisher[name].stream;
@@ -157,8 +184,7 @@ const useOpenTok = () => {
   const sendSignal = useCallback(
     ({ type, data, completionHandler }) => {
       if (!isSessionConnected) {
-        console.warn('Session is not connected');
-        return;
+        throw new Error('Session is not connected');
       }
 
       let signal = { data };
@@ -178,12 +204,6 @@ const useOpenTok = () => {
     [isSessionConnected, session]
   );
 
-  useEffect(() => {
-    if (!(apiKey && sessionId && token)) return;
-
-    action.update({ session: OT.initSession(apiKey, sessionId) });
-  }, [action, apiKey, sessionId, token]);
-
   useSessionEventHandler('connectionCreated', handleConnectionCreated, session);
   useSessionEventHandler(
     'connectionDestroyed',
@@ -192,15 +212,12 @@ const useOpenTok = () => {
   );
   useSessionEventHandler('streamCreated', handleStreamCreated, session);
   useSessionEventHandler('streamDestroyed', handleStreamDestroyed, session);
-  useSessionEventHandler(
-    'sessionDisconnected',
-    handleSessionDisconnected,
-    session
-  );
 
   return [
     state,
     {
+      initSessionAndConnect,
+      initSession,
       connectSession,
       disconnectSession,
       publish,
@@ -209,7 +226,6 @@ const useOpenTok = () => {
       unsubscribe,
       sendSignal,
     },
-    action.setCredentials,
   ];
 };
 

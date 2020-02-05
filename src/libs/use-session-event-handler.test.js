@@ -5,25 +5,11 @@ import { MOCK_CREDENTIALS } from './../__mocks__/mockData';
 import sessionEvent from './../__mocks__/mockEventEmitter';
 
 describe('test useSessionEventHandler', () => {
-  it('test for handle connectionCreated with correct parameters', () => {
-    // START - initial session
-    const { result: reactUseOpentokResult } = renderHook(() =>
-      reactUseOpentok()
-    );
-    let [
-      opentokProps,
-      opentokMethods,
-      setCredentials,
-    ] = reactUseOpentokResult.current;
-    act(() => setCredentials(MOCK_CREDENTIALS));
-
-    [
-      opentokProps,
-      opentokMethods,
-      setCredentials,
-    ] = reactUseOpentokResult.current;
-    expect(opentokProps.session).toBeDefined();
-    // END - initial session
+  it('test for handle connectionCreated with correct parameters', async () => {
+    const { result } = renderHook(() => reactUseOpentok());
+    let [opentokProps, opentokMethods] = result.current;
+    await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
+    [opentokProps, opentokMethods] = result.current;
 
     // NOTICE: remove all event listeners registered when rendering reactUseOpenTok
     sessionEvent.removeAllListeners('connectionCreated');
@@ -42,26 +28,13 @@ describe('test useSessionEventHandler', () => {
     expect(handleConnectionCreated).toHaveBeenCalledTimes(1);
   });
 
-  it('handle incorrect event type', () => {
-    // START - initial session
+  it('handle incorrect event type', async () => {
     const { result: reactUseOpentokResult } = renderHook(() =>
       reactUseOpentok()
     );
-    let [
-      opentokProps,
-      opentokMethods,
-      setCredentials,
-    ] = reactUseOpentokResult.current;
-
-    act(() => setCredentials(MOCK_CREDENTIALS));
-
-    [
-      opentokProps,
-      opentokMethods,
-      setCredentials,
-    ] = reactUseOpentokResult.current;
-    expect(opentokProps.session).toBeDefined();
-    // END - initial session
+    let [opentokProps, opentokMethods] = reactUseOpentokResult.current;
+    await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
+    [opentokProps, opentokMethods] = reactUseOpentokResult.current;
 
     // NOTICE: remove all event listeners registered when rendering reactUseOpenTok
     sessionEvent.removeAllListeners('connectionCreated');
@@ -80,25 +53,15 @@ describe('test useSessionEventHandler', () => {
     expect(() => result.current).toThrow();
   });
 
-  it('handle incorrect eventHandler', () => {
-    // START - initial session
+  it('handle incorrect eventHandler', async () => {
     const { result: reactUseOpentokResult } = renderHook(() =>
       reactUseOpentok()
     );
-    let [
-      opentokProps,
-      opentokMethods,
-      setCredentials,
-    ] = reactUseOpentokResult.current;
-    act(() => setCredentials(MOCK_CREDENTIALS));
+    let [opentokProps, opentokMethods] = reactUseOpentokResult.current;
+    await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
 
-    [
-      opentokProps,
-      opentokMethods,
-      setCredentials,
-    ] = reactUseOpentokResult.current;
+    [opentokProps, opentokMethods] = reactUseOpentokResult.current;
     expect(opentokProps.session).toBeDefined();
-    // END - initial session
 
     // NOTICE: remove all event listeners registered when rendering reactUseOpenTok
     sessionEvent.removeAllListeners('connectionCreated');

@@ -36,7 +36,6 @@ export default {
       '&:hover': {
         background: '#eee',
       },
-      cursor: 'pointer',
       fontSize: 1,
       '&:focus': {
         outline: '0 none',

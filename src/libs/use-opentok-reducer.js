@@ -1,11 +1,6 @@
 import { useReducer, useMemo } from 'react';
 
 const initialState = {
-  // credentials
-  apiKey: undefined,
-  sessionId: undefined,
-  token: undefined,
-
   // connection info
   connectionId: undefined,
   isSessionConnected: false,
@@ -20,7 +15,6 @@ const initialState = {
 
 // ACTION TYPE
 const UPDATE = 'UPDATE';
-const SET_CREDENTIALS = 'SET_CREDENTIALS';
 const ADD_CONNECTION = 'ADD_CONNECTION';
 const REMOVE_CONNECTION = 'REMOVE_CONNECTION';
 const ADD_STREAM = 'ADD_STREAM';
@@ -39,15 +33,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         ...payload,
-      };
-    }
-    case SET_CREDENTIALS: {
-      const { apiKey, sessionId, token } = payload;
-      return {
-        ...state,
-        apiKey,
-        sessionId,
-        token,
       };
     }
     case ADD_CONNECTION: {
@@ -128,16 +113,6 @@ const useOpenTokReducer = () => {
         dispatch({
           type: UPDATE,
           payload,
-        });
-      },
-      setCredentials({ apiKey, sessionId, token }) {
-        dispatch({
-          type: SET_CREDENTIALS,
-          payload: {
-            apiKey,
-            sessionId,
-            token,
-          },
         });
       },
       addConnection(connection) {

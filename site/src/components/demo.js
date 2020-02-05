@@ -7,7 +7,6 @@ import {
   Box,
   Label,
   Input,
-  Select,
   Textarea,
   Button,
   Badge,
@@ -25,26 +24,21 @@ const defaultOpenTokOptions = {
 };
 
 export default () => {
-  const [opentokProps, opentokMethods, setCredentials] = useOpenTok();
+  const [opentokProps, opentokMethods] = useOpenTok();
 
   const {
-    apiKey,
-    sessionId,
-    token,
-
     connectionId,
     isSessionConnected,
 
     session,
     connections,
     streams,
-
     subscribers,
     publisher,
   } = opentokProps;
 
   const {
-    connectSession,
+    initSessionAndConnect,
     disconnectSession,
     publish,
     unpublish,
@@ -59,9 +53,15 @@ export default () => {
       sessionId: SESSION_ID,
       token: TOKEN,
     },
-    onSubmit: values => {
-      // STEP 1-1: set credentials to init opentok session
-      setCredentials({ ...values });
+    onSubmit: async (values, { setSubmitting }) => {
+      const { apiKey, sessionId, token } = values;
+      await initSessionAndConnect({
+        apiKey,
+        sessionId,
+        token,
+      });
+
+      setSubmitting(false);
     },
   });
 
@@ -93,22 +93,20 @@ export default () => {
     console.log('handleSignal', e);
   }, []);
 
+  const handleSessionDisconnected = useCallback(e => {
+    console.log('handle session disconnected', e);
+  }, []);
+
   useEffect(() => {
     if (!isSessionConnected) {
       return;
     }
     session.on('signal', handleSignal);
+    session.once('sessionDisconnected', handleSessionDisconnected);
     return () => {
       session.off('signal', handleSignal);
     };
-  }, [handleSignal, isSessionConnected, session]);
-
-  // STEP 1-2: session will be initiated after credentials set
-  useEffect(() => {
-    if (session) {
-      connectSession();
-    }
-  }, [session]);
+  }, [handleSignal, handleSessionDisconnected, isSessionConnected, session]);
 
   const streamGroups =
     streams &&
@@ -118,7 +116,6 @@ export default () => {
       groups[connection.connectionId].push(stream);
       return groups;
     }, {});
-
 
   if (typeof window === 'undefined') return null;
 
@@ -179,7 +176,7 @@ export default () => {
             ></div>
           </div>
           <div>
-            {(session && session.currentState) === 'connected' ? (
+            {isSessionConnected ? (
               <>
                 <div
                   sx={{
@@ -304,7 +301,7 @@ export default () => {
                 <Button
                   variant="secondary"
                   type="submit"
-                  disabled={isSessionConnected}
+                  disabled={credentialsFormik.isSubmitting}
                   sx={{
                     display: 'block',
                     marginLeft: 'auto',
