@@ -34,21 +34,21 @@ yarn add react-use-opentok
 
 > NOTE: remember to install the peer dependency of [@opentok/client](https://www.npmjs.com/package/@opentok/client)
 
-## Getting Start
+## Getting Started
+
+1. Get utilities from `useOpenTok` hook
+2. Fetch `apiKey`, `sessionId`, and `token` from server
+3. Connect to session with `token`
 
 ```js
 import React, { useEffect } from 'react';
 import useOpenTok from 'react-use-opentok';
 
 const Component = () => {
-  const [opentokProps, opentokMethods, setCredentials] = useOpenTok();
+  // STEP 1: get utilities from useOpenTok;
+  const [opentokProps, opentokMethods] = useOpenTok();
 
   const {
-    // credentials
-    apiKey,
-    sessionId,
-    token,
-
     // connection info
     connectionId,
     isSessionConnected,
@@ -62,7 +62,7 @@ const Component = () => {
   } = opentokProps;
 
   const {
-    connectSession,
+    initSessionAndConnect,
     disconnectSession,
     publish,
     unpublish,
@@ -71,18 +71,18 @@ const Component = () => {
     sendSignal,
   } = opentokMethods;
 
-  // Mockup fetching credentials from server
+  // STEP 2: Mockup fetching apiKey, sessionId, and token from server
   useEffect(() => {
     fetch('<get credentials from server>').then(
       ({ apiKey, sessionId, token }) => {
-        setCredentials({
+        initSessionAndConnect({
           apiKey,
           sessionId,
           token,
         });
       }
     );
-  }, [setCredentials]);
+  }, [initSessionAndConnect]);
 
   return <div>...</div>;
 };
@@ -92,15 +92,187 @@ export default Component;
 
 ## Guide
 
-### useOpenTok Hook
+### Get all utilities from useOpenTok Hook
 
-You can get all utilities of [@opentok/client](https://www.npmjs.com/package/@opentok/client) from `useOpenTok` hook.
+You can get all utilities from `useOpenTok` hook.
 
 ```js
-const [opentokProps, opentokMethods, setCredentials] = useOpenTok();
+const [opentokProps, opentokMethods] = useOpenTok();
+
+const {
+  // connection info
+  connectionId,
+  isSessionConnected,
+
+  // connected data
+  session,
+  connections,
+  streams,
+  subscribers,
+  publisher,
+} = opentokProps;
+
+const {
+  initSessionAndConnect,
+  disconnectSession,
+  publish,
+  unpublish,
+  subscribe,
+  unsubscribe,
+  sendSignal,
+} = opentokMethods;
 ```
 
-### connect to
+### Connect and disconnect to session
+
+Before starting use openTok session object, remember to initialize session with `apiKey` and `sessionId` by `initSessionAndConnect` method:
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { initSessionAndConnect } = opentokMethods;
+
+// apiKey, sessionId, and token could get from your server or tokbox dashboard
+initSessionAndConnect({
+  apiKey,
+  sessionId,
+  token,
+});
+```
+
+After connect to session, you can get the `session`, `connectionId` , `isSessionConnected`, and `connections` properties from `opentokProps`:
+
+- `session`: a session object from [`OT.initSession()`](https://tokbox.com/developer/sdks/js/reference/OT.html#initSession)
+- `connectionId`: your own connectionId
+- `isSessionConnected`: whether you are connected to the session
+- `connections`: all connections in the session
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { session, connectionId, isSessionConnected, connections } = opentokProps;
+```
+
+By `disconnectSession`, you can disconnect from the session:
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { disconnectSession } = opentokMethods;
+
+disconnectSession();
+```
+
+### Publish and unpublished stream to the session
+
+You can publish stream from camera or screen to session through the `publish` method.
+
+- `name`: should be unique every time you invoke publish method which is for `unpublish` stream later.
+- `element`: should be a DOM element or the `id` attribute of the existing DOM element.
+- `options`: (optional) other optional properties which will pass into [OT.initPublisher](https://tokbox.com/developer/sdks/js/reference/OT.html#initPublisher).
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { publish } = opentokMethods;
+
+// publish stream from the camera
+publish({
+  name: 'camera',
+  element: 'camera',
+});
+
+// publish stream from screen sharing
+publish({
+  name: 'screen',
+  element: 'screen',
+  options: {
+    insertMode: 'append',
+    width: '100%',
+    height: '100%',
+    videoSource: 'screen',
+  },
+});
+```
+
+According to the `name` you publish, you could use the same name to unpublish it:
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { unpublish } = opentokMethods;
+
+// unpublish stream from the name 'camera'
+unpublish({ name: 'camera' }
+```
+
+### Subscribe and Unsubscribe
+
+You can get all streams in the session through `streams` property in `opentokProps`. After finding the stream for subscribing, use the `subscribe` method to subscribe to the stream:
+
+- `stream`: the Stream Object wanted to subscribe
+- `element`: should be a DOM element or the `id` attribute of the existing DOM element.
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { streams } = opentokProps;
+const { subscribe } = opentokMethods;
+
+const streamToSubscribe = streams[0];
+subscribe({ stream: streamToSubscribe, element: 'subscriber' });
+```
+
+For each stream be subscribed, a [subscriber object](https://tokbox.com/developer/sdks/js/reference/Session.html#subscribe) will be created and save as `subscribers` in `opentokProps`:
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { streams, subscribers } = opentokProps;
+```
+
+You can stop subscribing the stream with `unsubscribe` method:
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { unsubscribe } = opentokMethods;
+
+const streamToUnsubscribe = streams[0];
+unsubscribe({ stream: streamToUnsubscribe });
+```
+
+### Send signal
+
+You can send signal in session with `sendSignal` method:
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { sendSignal } = opentokMethods;
+
+sendSignal({
+  type: 'foo',
+  data: 'bar',
+});
+```
+
+### Register session events
+
+You could register all valid [session events](https://tokbox.com/developer/sdks/js/reference/Session.html#events) on `session` object. Take registering signal event, as an example,  use the `session` object in `opentokProps`, register the session event with `on`, and unregister the event with `off`:
+
+```js
+const [opentokProps, opentokMethods] = useOpenTok();
+const { session } = opentokProps;
+
+const handleSignal = useCallback(e => {
+  console.log('handleSignal', e);
+}, []);
+
+useEffect(() => {
+  if (!isSessionConnected) {
+    return;
+  }
+
+  session.on('signal', handleSignal);
+  return () => {
+    session.off('signal', handleSignal);
+  };
+}, [handleSignal, isSessionConnected, session]);
+```
+
+> NOTICE: for `sessionDisconnected` event, you can you `session.once('sessionDisconnected', <eventHandler>)`
 
 ## Development
 
@@ -118,7 +290,7 @@ $ npm test
 ```sh
 $ cd site
 $ npm install
-$ npm start         # start gatsby develope server
+$ npm start         # start gatsby develop server
 ```
 
 ## Contributors

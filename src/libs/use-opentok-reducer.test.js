@@ -1,7 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useOpenTokReducer from './use-opentok-reducer';
 import {
-  MOCK_CREDENTIALS,
   MOCK_STREAM,
   MOCK_PUBLISHER,
   MOCK_INIT_PUBLISHER,
@@ -10,35 +9,6 @@ import {
 } from './../__mocks__/mockData';
 
 describe('test useOpenTokReducer', () => {
-  test('setCredential', () => {
-    const { result } = renderHook(() => useOpenTokReducer());
-    const [preState, actions] = result.current;
-    const { setCredentials } = actions;
-
-    expect({
-      apiKey: preState.apiKey,
-      sessionId: preState.sessionId,
-      token: preState.token,
-    }).toEqual({
-      apiKey: undefined,
-      sessionId: undefined,
-      token: undefined,
-    });
-
-    act(() => {
-      setCredentials(MOCK_CREDENTIALS);
-    });
-
-    const [state] = result.current;
-    const { apiKey, sessionId, token } = state;
-
-    expect({
-      apiKey,
-      sessionId,
-      token,
-    }).toEqual(MOCK_CREDENTIALS);
-  });
-
   test('addConnection and removeConnection', () => {
     const { id, connectionId } = MOCK_CONNECTION;
     const { result } = renderHook(() => useOpenTokReducer());
