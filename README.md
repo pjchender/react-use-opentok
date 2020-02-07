@@ -23,13 +23,13 @@ See our demo site: [react-use-opentok](https://pjchender.github.io/react-use-ope
 Install it with npm:
 
 ```
-npm i react-use-opentok --save
+npm i @opentok/client@2.x react-use-opentok
 ```
 
 Or with yarn:
 
 ```
-yarn add react-use-opentok
+yarn add @opentok/client@2.x react-use-opentok
 ```
 
 > NOTE: remember to install the peer dependency of [@opentok/client](https://www.npmjs.com/package/@opentok/client)
