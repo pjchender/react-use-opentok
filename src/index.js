@@ -68,14 +68,14 @@ const useOpenTok = () => {
   );
 
   const connectSession = useCallback(
-    (token, sessionToConnect = session) =>
+    (token, sessionToConnect) =>
       new Promise((resolve, reject) => {
         if (!token) {
-          reject('[react-use-opentok] token does not exist.');
+          return reject('[react-use-opentok] token does not exist.');
         }
 
         if (!sessionToConnect) {
-          reject('[react-use-opentok] session does not exist.');
+          return reject('[react-use-opentok] session does not exist.');
         }
 
         sessionToConnect.connect(token, error => {
@@ -92,7 +92,7 @@ const useOpenTok = () => {
           }
         });
       }),
-    [action, session]
+    [action]
   );
 
   const initSessionAndConnect = useCallback(

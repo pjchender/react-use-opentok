@@ -42,7 +42,7 @@ describe('session initialization and connection', () => {
       expect(error).toMatch(/token/);
     }
 
-    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token));
+    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token, opentokProps.session));
     [opentokProps, opentokMethods] = result.current;
     expect(opentokProps.isSessionConnected).toBeTruthy();
     expect(opentokProps.connectionId).toEqual(expect.any(String));
@@ -80,7 +80,7 @@ describe('session methods after initialization', () => {
       connectionId: undefined,
     });
 
-    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token));
+    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token, opentokProps.session));
     [opentokProps, opentokMethods] = result.current;
     expect(opentokProps).toMatchObject({
       isSessionConnected: true,
@@ -206,7 +206,7 @@ describe('session methods after initialization', () => {
     await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
     [opentokProps, opentokMethods] = result.current;
 
-    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token));
+    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token, opentokProps.session));
     [opentokProps, opentokMethods] = result.current;
 
     // register signal event
