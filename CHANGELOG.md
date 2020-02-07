@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/pjchender/react-use-opentok/compare/v2.0.0...v2.0.1) (2020-02-07)
+
+
+### Bug Fixes
+
+* unexpectedly invoke initSessionAndConnect twice when use it in useEffect ([#10](https://github.com/pjchender/react-use-opentok/issues/10)) ([d300f89](https://github.com/pjchender/react-use-opentok/commit/d300f896e3a8339810650db2fa7cd4797a488aa3))
+
 # [2.0.0](https://github.com/pjchender/react-use-opentok/compare/v1.0.5...v2.0.0) (2020-02-05)
 
 
