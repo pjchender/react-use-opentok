@@ -2,6 +2,7 @@ import { useReducer, useMemo } from 'react';
 
 const initialState = {
   // connection info
+  isSessionInitialized: false,
   connectionId: undefined,
   isSessionConnected: false,
 

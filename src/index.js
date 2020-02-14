@@ -61,7 +61,7 @@ const useOpenTok = () => {
     ({ apiKey, sessionId, sessionOptions }) =>
       new Promise(resolve => {
         const session = OT.initSession(apiKey, sessionId, sessionOptions);
-        action.update({ session });
+        action.update({ session, isSessionInitialized: true });
         resolve(session);
       }),
     [action]
