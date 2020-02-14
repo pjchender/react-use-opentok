@@ -27,6 +27,7 @@
     "gatsby-plugin-theme-ui": "^0.2.53",
     "react": "file:../node_modules/react",
     "react-dom": "^16.12.0",
+    "react-use-localstorage": "^3.4.1",
     "react-use-opentok": "file:..",
     "theme-ui": "^0.2.52"
   },

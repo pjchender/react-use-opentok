@@ -3,6 +3,7 @@ import React, { useEffect, useCallback } from 'react';
 import { jsx } from 'theme-ui';
 import { useFormik } from 'formik';
 import useOpenTok from 'react-use-opentok';
+import useLocalStorage from 'react-use-localstorage';
 import {
   Box,
   Label,
@@ -25,6 +26,14 @@ const defaultOpenTokOptions = {
 
 export default () => {
   const [opentokProps, opentokMethods] = useOpenTok();
+  const [credentials, setCredentials] = useLocalStorage(
+    'credentials',
+    JSON.stringify({
+      apiKey: API_KEY,
+      sessionId: SESSION_ID,
+      token: TOKEN,
+    })
+  );
 
   const {
     connectionId,
@@ -49,12 +58,16 @@ export default () => {
 
   const credentialsFormik = useFormik({
     initialValues: {
-      apiKey: API_KEY,
-      sessionId: SESSION_ID,
-      token: TOKEN,
+      ...JSON.parse(credentials),
     },
     onSubmit: async (values, { setSubmitting }) => {
       const { apiKey, sessionId, token } = values;
+      setCredentials(
+        JSON.stringify({
+          ...values,
+        })
+      );
+
       await initSessionAndConnect({
         apiKey,
         sessionId,
