@@ -14,10 +14,12 @@ describe('session initialization and connection', () => {
     let [opentokProps, opentokMethods] = result.current;
 
     expect(opentokProps.session).toBeUndefined();
+    expect(opentokProps.isSessionInitialized).toBeFalsy();
     await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
 
     [opentokProps, opentokMethods] = result.current;
     expect(opentokProps.session).toBeDefined();
+    expect(opentokProps.isSessionInitialized).toBeTruthy();
   });
 
   it('connectSession', async () => {

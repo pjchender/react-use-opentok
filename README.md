@@ -50,6 +50,7 @@ const Component = () => {
 
   const {
     // connection info
+    isSessionInitialized,
     connectionId,
     isSessionConnected,
 
@@ -101,6 +102,7 @@ const [opentokProps, opentokMethods] = useOpenTok();
 
 const {
   // connection info
+  isSessionInitialized,
   connectionId,
   isSessionConnected,
 
@@ -138,6 +140,9 @@ initSessionAndConnect({
   token,
 });
 ```
+This methods will first initialize the session object, and continue connected to the session.
+
+After session initialized, the value of `isSessionInitialized` will be `true.
 
 After connect to session, you can get the `session`, `connectionId` , `isSessionConnected`, and `connections` properties from `opentokProps`:
 
@@ -159,6 +164,8 @@ const { disconnectSession } = opentokMethods;
 
 disconnectSession();
 ```
+
+> If you want to control the process of session initialization and connect to session on your own, check the method `initSession({ apiKey, sessionId, sessionOptions })` and `connectSession({token, sessionToConnect })`.
 
 ### Publish and unpublished stream to the session
 
