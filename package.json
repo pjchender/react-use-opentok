@@ -1,6 +1,6 @@
 {
   "name": "react-use-opentok",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "React Hook for @opentok/client SDK",
   "contributors": [
     "PJCHENder <pjchender@gmail.com> (https://pjchender.blogspot.com)",

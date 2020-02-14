@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/pjchender/react-use-opentok/compare/v2.0.1...v2.1.0) (2020-02-14)
+
+
+### Features
+
+* add isSessionInitialized properties ([#11](https://github.com/pjchender/react-use-opentok/issues/11)) ([6636959](https://github.com/pjchender/react-use-opentok/commit/663695972a84c175784a3cee47df2518c2c6dbd7))
+
 ## [2.0.1](https://github.com/pjchender/react-use-opentok/compare/v2.0.0...v2.0.1) (2020-02-07)
 
 
