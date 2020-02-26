@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/pjchender/react-use-opentok/compare/v2.1.0...v2.1.1) (2020-02-26)
+
+
+### Bug Fixes
+
+* throw error issue ([#13](https://github.com/pjchender/react-use-opentok/issues/13)) ([459e1b6](https://github.com/pjchender/react-use-opentok/commit/459e1b6c738f6a878acde687f45cbaca6c3cfd70))
+
 # [2.1.0](https://github.com/pjchender/react-use-opentok/compare/v2.0.1...v2.1.0) (2020-02-14)
 
 
