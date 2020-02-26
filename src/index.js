@@ -5,7 +5,7 @@ import OT from '@opentok/client';
 
 const handleError = error => {
   if (error) {
-    console.error('[HandleError]', error.message);
+    throw error;
   }
 };
 
