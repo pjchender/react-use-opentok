@@ -196,6 +196,14 @@ publish({
     videoSource: 'screen',
   },
 });
+
+// publish support Promise way to catch errors
+publish({
+  name: 'camera',
+  element: 'camera',
+}).catch((ex) => {
+  console.log(ex);
+});
 ```
 
 According to the `name` you publish, you could use the same name to unpublish it:

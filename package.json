@@ -44,13 +44,14 @@
     "url": "https://github.com/pjchender/react-use-opentok/issues"
   },
   "peerDependencies": {
-    "react": "^16.12.0",
+    "react": "^16.13.0",
     "@opentok/client": "^2.16.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
+    "@babel/runtime-corejs3": "^7.8.4",
     "@opentok/client": "^2.16.6",
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
@@ -75,7 +76,7 @@
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "gh-pages": "^2.0.1",
-    "react": "^16.9.0",
+    "react": "^16.13.0",
     "react-scripts": "^3.0.1",
     "react-test-renderer": "^16.9.0",
     "rollup": "^1.30.1",
@@ -87,5 +88,6 @@
     "rollup-plugin-url": "^3.0.1",
     "semantic-release": "^17.0.1",
     "typescript": "^3.7.5"
-  }
+  },
+  "dependencies": {}
 }
