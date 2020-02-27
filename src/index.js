@@ -3,12 +3,6 @@ import useOpenTokReducer from './libs/use-opentok-reducer';
 import useSessionEventHandler from './libs/use-session-event-handler';
 import OT from '@opentok/client';
 
-const handleError = error => {
-  if (error) {
-    throw error;
-  }
-};
-
 // default options for subscribe and initPublisher
 const defaultOptions = {
   insertMode: 'append',
@@ -80,7 +74,6 @@ const useOpenTok = () => {
 
         sessionToConnect.connect(token, error => {
           if (error) {
-            handleError(error);
             reject(error);
           } else {
             const connectionId = sessionToConnect.connection.connectionId;
@@ -121,19 +114,29 @@ const useOpenTok = () => {
       if (publisher[name]) {
         throw new Error(`The publisher(${name}) is already existed`);
       }
-
-      const newPublisher = OT.initPublisher(element, options, handleError);
-
-      session.publish(newPublisher, error => {
-        if (error) {
-          handleError(error);
-        } else {
-          action.setPublisher({
-            name,
-            publisher: newPublisher,
+      
+      return new Promise((resolve, reject) => {
+        const newPublisher = OT.initPublisher(element, options, (error) => {
+          if (error) {
+            reject(error);
+          }
+        });
+        resolve(newPublisher);
+      }).then((newPublisher) => {
+        return new Promise((resolve, reject) => {
+          session.publish(newPublisher, error => {
+            if (error) {
+              reject(error);
+            } else {
+              action.setPublisher({
+                name,
+                publisher: newPublisher,
+              });
+              action.addStream(newPublisher.stream);
+              resolve(newPublisher.stream);
+            }
           });
-          action.addStream(newPublisher.stream);
-        }
+        });
       });
     },
     [action, publisher, session]

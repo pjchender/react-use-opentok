@@ -111,7 +111,7 @@ describe('session methods after initialization', () => {
     });
 
     // publish
-    act(() =>
+    await act(() =>
       opentokMethods.publish({
         name,
         element,
@@ -164,7 +164,7 @@ describe('session methods after initialization', () => {
     await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
     [opentokProps, opentokMethods] = result.current;
 
-    act(() =>
+    await act(() =>
       opentokMethods.publish({
         name,
         element,
