@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/pjchender/react-use-opentok/compare/v2.1.1...v2.2.0) (2020-02-27)
+
+
+### Features
+
+* Support promise sharp for publish method ([#14](https://github.com/pjchender/react-use-opentok/issues/14)) ([660b356](https://github.com/pjchender/react-use-opentok/commit/660b3562a103df78036d3c9a7a06722cdd891334))
+
 ## [2.1.1](https://github.com/pjchender/react-use-opentok/compare/v2.1.0...v2.1.1) (2020-02-26)
 
 
