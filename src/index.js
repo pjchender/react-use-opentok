@@ -110,17 +110,21 @@ const useOpenTok = () => {
   }, [action, session]);
 
   const publish = useCallback(
-    ({ name, element, options = defaultOptions }) => {
+    ({ name, element, options }) => {
       if (publisher[name]) {
         throw new Error(`The publisher(${name}) is already existed`);
       }
       
       return new Promise((resolve, reject) => {
-        const newPublisher = OT.initPublisher(element, options, (error) => {
-          if (error) {
-            reject(error);
+        const newPublisher = OT.initPublisher(
+          element,
+          { ...defaultOptions, ...options },
+          (error) => {
+            if (error) {
+              reject(error);
+            }
           }
-        });
+        );
         resolve(newPublisher);
       }).then((newPublisher) => {
         return new Promise((resolve, reject) => {
@@ -158,12 +162,13 @@ const useOpenTok = () => {
   );
 
   const subscribe = useCallback(
-    ({ stream, element }) => {
+    ({ stream, element, options }) => {
       const { streamId } = stream;
       const pickedStream = streams.find(s => s.streamId === streamId);
 
       const subscriber = session.subscribe(pickedStream, element, {
         ...defaultOptions,
+        ...options,
       });
 
       action.addSubscriber(subscriber);
