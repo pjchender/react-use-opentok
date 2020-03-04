@@ -4,7 +4,8 @@
   "description": "React Hook for @opentok/client SDK",
   "contributors": [
     "PJCHENder <pjchender@gmail.com> (https://pjchender.blogspot.com)",
-    "Andyyou <andyyu0920@gmail.com> (http://andyyou.github.io/)"
+    "Andyyou <andyyu0920@gmail.com> (http://andyyou.github.io/)",
+    "Mwjrink <mwjrink@gmail.com> (https://github.com/mwjrink)"
   ],
   "license": "MIT",
   "main": "dist/react-use-opentok.cjs.min.js",
