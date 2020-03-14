@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/pjchender/react-use-opentok/compare/v2.2.0...v2.2.1) (2020-03-14)
+
+
+### Bug Fixes
+
+* Return subscriber of subscribe method ([#17](https://github.com/pjchender/react-use-opentok/issues/17)) ([8439ca3](https://github.com/pjchender/react-use-opentok/commit/8439ca3f416d84d401ceccb03c68a1737ffa3c5d))
+
 # [2.2.0](https://github.com/pjchender/react-use-opentok/compare/v2.1.1...v2.2.0) (2020-02-27)
 
 
