@@ -172,6 +172,7 @@ const useOpenTok = () => {
       });
 
       action.addSubscriber(subscriber);
+      return subscriber;
     },
     [action, session, streams]
   );
