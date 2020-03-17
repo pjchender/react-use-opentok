@@ -30,7 +30,7 @@ const initialCredentials = JSON.stringify({
   token: TOKEN,
 });
 
-export default () => {
+const Demo = () => {
   const [opentokProps, opentokMethods] = useOpenTok();
   const [credentials, setCredentials] =
     typeof window !== 'undefined'
@@ -417,3 +417,5 @@ export default () => {
     </>
   );
 };
+
+export default Demo;
