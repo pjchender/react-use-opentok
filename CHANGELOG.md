@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/pjchender/react-use-opentok/compare/v2.2.1...v2.2.2) (2020-03-26)
+
+
+### Bug Fixes
+
+* clarify the error message ([ffdd27c](https://github.com/pjchender/react-use-opentok/commit/ffdd27c1e9fd18aa3cd0f2e4489b829a31c6c517))
+
 ## [2.2.1](https://github.com/pjchender/react-use-opentok/compare/v2.2.0...v2.2.1) (2020-03-14)
 
 
