@@ -18,10 +18,14 @@ const events = [
 export default (type, callback, session) => {
   const isEventTypeSupported = events.some(e => type.startsWith(e));
   if (!isEventTypeSupported) {
-    throw new Error('The event type is NOT supported');
+    throw new Error(
+      '[ReactUseOpenTok] useSessionEventHandler: The event type is NOT supported'
+    );
   }
   if (typeof callback !== 'function') {
-    throw new Error('Incorrect value or type of callback');
+    throw new Error(
+      '[ReactUseOpenTok] useSessionEventHandler: Incorrect value or type of callback'
+    );
   }
 
   useEffect(() => {

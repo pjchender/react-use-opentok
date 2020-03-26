@@ -3,6 +3,7 @@ import { Hook, Console } from 'console-feed';
 import { Box, Heading } from '@theme-ui/components';
 
 const scrollToBottom = targetElement => {
+  if (!targetElement) return;
   targetElement.scrollTo({
     top: targetElement.scrollHeight,
     behavior: 'smooth',

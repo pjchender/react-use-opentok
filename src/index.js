@@ -65,11 +65,11 @@ const useOpenTok = () => {
     (token, sessionToConnect) =>
       new Promise((resolve, reject) => {
         if (!token) {
-          return reject('[react-use-opentok] token does not exist.');
+          return reject('[ReactUseOpenTok] token does not exist.');
         }
 
         if (!sessionToConnect) {
-          return reject('[react-use-opentok] session does not exist.');
+          return reject('[ReactUseOpenTok] session does not exist.');
         }
 
         sessionToConnect.connect(token, error => {
@@ -112,9 +112,9 @@ const useOpenTok = () => {
   const publish = useCallback(
     ({ name, element, options }) => {
       if (publisher[name]) {
-        throw new Error(`The publisher(${name}) is already existed`);
+        throw new Error(`[ReactUseOpenTok] publish: The publisher(${name}) is already existed`);
       }
-      
+
       return new Promise((resolve, reject) => {
         const newPublisher = OT.initPublisher(
           element,
@@ -149,7 +149,7 @@ const useOpenTok = () => {
   const unpublish = useCallback(
     ({ name }) => {
       if (!(publisher && publisher[name])) {
-        throw new Error(`[unpublish] publisher[${name}] is undefined`);
+        throw new Error(`[ReactUseOpenTok] unpublish: publisher[${name}] is undefined`);
       }
 
       const stream = publisher && publisher[name] && publisher[name].stream;
@@ -193,7 +193,7 @@ const useOpenTok = () => {
   const sendSignal = useCallback(
     ({ type, data, completionHandler }) => {
       if (!isSessionConnected) {
-        throw new Error('Session is not connected');
+        throw new Error('[ReactUseOpenTok] sendSignal: Session is not connected');
       }
 
       let signal = { data };
@@ -204,7 +204,7 @@ const useOpenTok = () => {
 
       session.signal(signal, error => {
         if (error) {
-          console.warn('signal error: ' + error.message);
+          console.warn('[ReactUseOpenTok] sendSignal error: ' + error.message);
         } else if (typeof completionHandler === 'function') {
           completionHandler();
         }
