@@ -87,6 +87,7 @@ const MOCK_SESSION = {
 };
 
 const MOCK_SIGNAL = {
+  to: 'to-specific-user',
   type: 'foo',
   data: JSON.stringify({
     foo: 'bar',

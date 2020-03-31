@@ -191,15 +191,15 @@ const useOpenTok = () => {
   );
 
   const sendSignal = useCallback(
-    ({ type, data, completionHandler }) => {
+    ({ type, data, to, completionHandler }) => {
       if (!isSessionConnected) {
         throw new Error('[ReactUseOpenTok] sendSignal: Session is not connected');
       }
 
-      let signal = { data };
-
-      if (typeof type === 'string' && type.length > 0) {
-        signal.type = type;
+      let signal = {
+        data,
+        ...type && { type },
+        ...to && { to },
       }
 
       session.signal(signal, error => {

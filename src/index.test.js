@@ -44,7 +44,12 @@ describe('session initialization and connection', () => {
       expect(error).toMatch(/token/);
     }
 
-    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token, opentokProps.session));
+    await act(() =>
+      opentokMethods.connectSession(
+        MOCK_CREDENTIALS.token,
+        opentokProps.session
+      )
+    );
     [opentokProps, opentokMethods] = result.current;
     expect(opentokProps.isSessionConnected).toBeTruthy();
     expect(opentokProps.connectionId).toEqual(expect.any(String));
@@ -82,7 +87,12 @@ describe('session methods after initialization', () => {
       connectionId: undefined,
     });
 
-    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token, opentokProps.session));
+    await act(() =>
+      opentokMethods.connectSession(
+        MOCK_CREDENTIALS.token,
+        opentokProps.session
+      )
+    );
     [opentokProps, opentokMethods] = result.current;
     expect(opentokProps).toMatchObject({
       isSessionConnected: true,
@@ -180,12 +190,14 @@ describe('session methods after initialization', () => {
     const stream = opentokProps.publisher[name].stream;
 
     // subscribe
-    act(() =>
+    act(() => {
       opentokMethods.subscribe({
         stream,
         element: 'subscriber',
-      })
-    );
+      });
+      return undefined;
+    });
+
     [opentokProps, opentokMethods] = result.current;
 
     expect(opentokProps.subscribers.length).toBe(1);
@@ -200,7 +212,7 @@ describe('session methods after initialization', () => {
     expect(opentokProps.subscribers.length).toBe(0);
   });
 
-  it('sendSignal', async () => {
+  it('sendSignal with to and type', async () => {
     const { result } = renderHook(() => reactUseOpentok());
     let [opentokProps, opentokMethods] = result.current;
     expect(() => act(() => opentokMethods.sendSignal(MOCK_SIGNAL))).toThrow();
@@ -208,7 +220,12 @@ describe('session methods after initialization', () => {
     await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
     [opentokProps, opentokMethods] = result.current;
 
-    await act(() => opentokMethods.connectSession(MOCK_CREDENTIALS.token, opentokProps.session));
+    await act(() =>
+      opentokMethods.connectSession(
+        MOCK_CREDENTIALS.token,
+        opentokProps.session
+      )
+    );
     [opentokProps, opentokMethods] = result.current;
 
     // register signal event
@@ -223,6 +240,42 @@ describe('session methods after initialization', () => {
     expect(handleSignal).toHaveBeenCalledTimes(1);
     expect(handleSignal).toHaveBeenCalledWith({
       type: MOCK_SIGNAL.type,
+      data: MOCK_SIGNAL.data,
+      to: MOCK_SIGNAL.to,
+    });
+  });
+
+  it('sendSignal without to and type', async () => {
+    const { result } = renderHook(() => reactUseOpentok());
+    let [opentokProps, opentokMethods] = result.current;
+    const { to, type, ...mockSignalWithoutTypeAndTo } = MOCK_SIGNAL;
+
+    expect(() =>
+      act(() => opentokMethods.sendSignal(mockSignalWithoutTypeAndTo))
+    ).toThrow();
+
+    await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
+    [opentokProps, opentokMethods] = result.current;
+
+    await act(() =>
+      opentokMethods.connectSession(
+        MOCK_CREDENTIALS.token,
+        opentokProps.session
+      )
+    );
+    [opentokProps, opentokMethods] = result.current;
+
+    // register signal event
+    const handleSignal = jest.fn(e => e);
+    act(() => opentokProps.session.on('signal', handleSignal));
+    expect(handleSignal).not.toHaveBeenCalled();
+
+    // dispatch signal event
+    [opentokProps, opentokMethods] = result.current;
+    act(() => opentokMethods.sendSignal(mockSignalWithoutTypeAndTo));
+
+    expect(handleSignal).toHaveBeenCalledTimes(1);
+    expect(handleSignal).toHaveBeenCalledWith({
       data: MOCK_SIGNAL.data,
     });
   });
