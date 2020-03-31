@@ -1,3 +1,10 @@
+## [2.2.3](https://github.com/pjchender/react-use-opentok/compare/v2.2.2...v2.2.3) (2020-03-31)
+
+
+### Bug Fixes
+
+* recevie 'to' when sendSignal ([7b8a801](https://github.com/pjchender/react-use-opentok/commit/7b8a80162924f77d23cf5712d1ad176f0d7ded09))
+
 ## [2.2.2](https://github.com/pjchender/react-use-opentok/compare/v2.2.1...v2.2.2) (2020-03-26)
 
 
