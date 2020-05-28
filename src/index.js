@@ -163,10 +163,7 @@ const useOpenTok = () => {
 
   const subscribe = useCallback(
     ({ stream, element, options }) => {
-      const { streamId } = stream;
-      const pickedStream = streams.find(s => s.streamId === streamId);
-
-      const subscriber = session.subscribe(pickedStream, element, {
+      const subscriber = session.subscribe(stream, element, {
         ...defaultOptions,
         ...options,
       });
@@ -174,7 +171,7 @@ const useOpenTok = () => {
       action.addSubscriber(subscriber);
       return subscriber;
     },
-    [action, session, streams]
+    [action, session]
   );
 
   const unsubscribe = useCallback(
