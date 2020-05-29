@@ -1,3 +1,10 @@
+## [2.2.4](https://github.com/pjchender/react-use-opentok/compare/v2.2.3...v2.2.4) (2020-05-29)
+
+
+### Bug Fixes
+
+* subscribe stream cannot be null ([#20](https://github.com/pjchender/react-use-opentok/issues/20)) ([8130593](https://github.com/pjchender/react-use-opentok/commit/81305933024d5985b63d1f7488b3af5cc68eaaed))
+
 ## [2.2.3](https://github.com/pjchender/react-use-opentok/compare/v2.2.2...v2.2.3) (2020-03-31)
 
 
