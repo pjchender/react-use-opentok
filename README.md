@@ -289,6 +289,67 @@ useEffect(() => {
 
 > NOTICE: for `sessionDisconnected` event, you can you `session.once('sessionDisconnected', <eventHandler>)`
 
+### (Optional) Preview Solution
+
+You may want to split `OT.initPublisher` and `session.publish` and invoke it in different stage. To solve the requirement you can use `initPublisher` and `publishPublisher` instead. If you need to cancel preview you can use `removePublisher` as well.
+
+NOTE:
+
+* `initPublisher` - Same with `OT.initPublisher` but support state which means you can access `publisher`.
+* `removePublisher` - The method can only remove `publisher` without publish. Once you publish the `publisher` you should use `unpublish` instead.
+* `publishPublisher` - Publish for `initPublisher`.
+
+`initPublisher` + `publishPublisher` = `publish`
+
+For example:
+
+```js
+const Component = () => {
+  const [opentokProps, opentokMethods] = useOpenTok();
+
+  const {
+    initPublisher,
+    publishPublisher,
+    removePublisher,
+  } = opentokMethods;
+
+  // ...
+
+  const onInitPublisher = () => {
+    initPublisher({
+      name: 'guest',
+      element: 'guest',
+      options: {
+        insertMode: 'append',
+        width: '480px',
+        height: '360px',
+      },
+    });
+  };
+  const onPublishPublisher = () => {
+    publishPublisher({
+      name: 'guest',
+    });
+  };
+  const onRemovePublisher = () => {
+    removePublisher({
+      name: 'guest',
+    });
+  };
+
+  return (
+    <div>
+      <div id="guest"></div>
+      <div>
+        <button onClick={onInitPublisher}>Init Publisher without publish</button>
+        <button onClick={onRemovePublisher}>Remove Publisher before publish</button>
+        <button onClick={onPublishPublisher}>Publish Publisher</button>
+      </div>
+    </div>
+  );
+}
+```
+
 ## Development
 
 ### for react-use-opentok package
