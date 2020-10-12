@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/pjchender/react-use-opentok/compare/v2.2.4...v2.3.0) (2020-10-12)
+
+
+### Features
+
+* support initPublisher, removePublisher, publishPublisher ([#25](https://github.com/pjchender/react-use-opentok/issues/25)) ([0f7299a](https://github.com/pjchender/react-use-opentok/commit/0f7299a2c5f9b1684576b96a496ddc7c52ed952f))
+
 ## [2.2.4](https://github.com/pjchender/react-use-opentok/compare/v2.2.3...v2.2.4) (2020-05-29)
 
 
