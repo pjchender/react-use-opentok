@@ -109,6 +109,67 @@ const useOpenTok = () => {
     });
   }, [action, session]);
 
+  const initPublisher = useCallback(({
+    name,
+    element,
+    options,
+  }) => {
+    if (publisher[name]) {
+      throw new Error(`[ReactUseOpenTok] initPublisher: The publisher(${name}) is already existed`);
+    }
+    return new Promise((resolve, reject) => {
+      const newPublisher = OT.initPublisher(
+        element,
+        { ...defaultOptions, ...options },
+        (error) => {
+          if (error) {
+            reject(error);
+          }
+        }
+      );
+      action.setPublisher({
+        name,
+        publisher: newPublisher,
+      });
+      resolve(newPublisher);
+    });
+  }, [action, session, publisher]);
+
+  const removePublisher = useCallback(({
+    name,
+  }) => {
+    if (!publisher[name]) {
+      throw new Error(`[ReactUseOpenTok] removePublisher: The publisher(${name}) is not existed`);
+    }
+
+    const published = streams.some((stream) => stream.streamId === publisher[name].stream.streamId);
+    if (published) {
+      throw new Error(`[ReactUseOpenTok] removePublisher: can NOT remove published publisher, please use unpublish instead.`);
+    }
+
+    publisher[name].destroy();
+    action.removePublisher({ name });
+  }, [action, streams, publisher]);
+
+  const publishPublisher = useCallback(({
+    name
+  }) => {
+    if (!publisher[name]) {
+      throw new Error(`[ReactUseOpenTok] publishPublisher: The publisher(${name}) is not existed`);
+    }
+
+    return new Promise((resolve, reject) => {
+      session.publish(publisher[name], error => {
+        if (error) {
+          reject(error);
+        } else {
+          action.addStream(publisher[name].stream);
+          resolve(publisher[name].stream);
+        }
+      });
+    });
+  }, [action, session, publisher]);
+
   const publish = useCallback(
     ({ name, element, options }) => {
       if (publisher[name]) {
@@ -226,6 +287,9 @@ const useOpenTok = () => {
       initSession,
       connectSession,
       disconnectSession,
+      initPublisher,
+      removePublisher,
+      publishPublisher,
       publish,
       unpublish,
       subscribe,
