@@ -262,7 +262,7 @@ const useOpenTok = () => {
 
       session.signal(signal, error => {
         if (error) {
-          console.warn('[ReactUseOpenTok] sendSignal error: ' + error.message);
+          throw new Error('[ReactUseOpenTok] sendSignal error: ' + error.message);
         } else if (typeof completionHandler === 'function') {
           completionHandler();
         }
