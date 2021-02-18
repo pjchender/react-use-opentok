@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import external from 'rollup-plugin-peer-deps-external';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
@@ -14,23 +14,26 @@ export default {
       file: pkg.main.replace('.min', ''),
       format: 'cjs',
       sourcemap: true,
+      exports: 'auto',
     },
     {
       file: pkg.main,
       format: 'cjs',
       sourcemap: true,
+      exports: 'auto',
     },
     {
       file: pkg.module,
       format: 'esm',
       sourcemap: true,
+      exports: 'auto',
     },
   ],
-  external: ['@opentok/client', 'react'],
+  external: [/@babel\/runtime/, '@opentok/client', 'react'],
   plugins: [
     external(),
     url({ exclude: ['**/*.svg'] }),
-    babel(),
+    babel({ babelHelpers: 'runtime' }),
     resolve(),
     commonjs(),
     terser({

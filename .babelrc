@@ -8,7 +8,7 @@
     ],
     "@babel/preset-react"
   ],
-  "plugins": [],
+  "plugins": ["@babel/plugin-transform-runtime"],
   "exclude": [
     "node_modules/**"
   ]
