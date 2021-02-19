@@ -1,3 +1,11 @@
+## [2.3.1](https://github.com/pjchender/react-use-opentok/compare/v2.3.0...v2.3.1) (2021-02-19)
+
+
+### Bug Fixes
+
+* [#25](https://github.com/pjchender/react-use-opentok/issues/25) change warn to throw for sendSignal ([#26](https://github.com/pjchender/react-use-opentok/issues/26)) ([222e6e6](https://github.com/pjchender/react-use-opentok/commit/222e6e61ebb85708577524182870781eb23ccd54))
+* Travis YAML to specify node version ([0091758](https://github.com/pjchender/react-use-opentok/commit/009175802e06ee98add0ed1776f3d2fb28b4fd01))
+
 # [2.3.0](https://github.com/pjchender/react-use-opentok/compare/v2.2.4...v2.3.0) (2020-10-12)
 
 
