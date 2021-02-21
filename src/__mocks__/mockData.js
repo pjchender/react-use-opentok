@@ -32,6 +32,7 @@ const MOCK_PUBLISHER = {
   session: {},
   streamId: MOCK_STREAM.streamId,
   stream: MOCK_STREAM,
+  destroy: () => {},
 };
 
 const MOCK_SUBSCRIBER = {

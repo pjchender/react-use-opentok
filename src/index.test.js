@@ -44,6 +44,7 @@ describe('session initialization and connection', () => {
       expect(error).toMatch(/token/);
     }
 
+    [opentokProps, opentokMethods] = result.current;
     await act(() =>
       opentokMethods.connectSession(
         MOCK_CREDENTIALS.token,
@@ -229,7 +230,7 @@ describe('session methods after initialization', () => {
     [opentokProps, opentokMethods] = result.current;
 
     // register signal event
-    const handleSignal = jest.fn(e => e);
+    const handleSignal = jest.fn((e) => e);
     act(() => opentokProps.session.on('signal', handleSignal));
     expect(handleSignal).not.toHaveBeenCalled();
 
@@ -266,7 +267,7 @@ describe('session methods after initialization', () => {
     [opentokProps, opentokMethods] = result.current;
 
     // register signal event
-    const handleSignal = jest.fn(e => e);
+    const handleSignal = jest.fn((e) => e);
     act(() => opentokProps.session.on('signal', handleSignal));
     expect(handleSignal).not.toHaveBeenCalled();
 
@@ -278,6 +279,160 @@ describe('session methods after initialization', () => {
     expect(handleSignal).toHaveBeenCalledWith({
       data: MOCK_SIGNAL.data,
     });
+  });
+});
+
+describe('publisher initialization and remove', () => {
+  it('initPublisher', async () => {
+    const { name, element, options } = MOCK_INIT_PUBLISHER;
+    const { result } = renderHook(() => reactUseOpentok());
+    let [opentokProps, opentokMethods] = result.current;
+    await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
+    [opentokProps, opentokMethods] = result.current;
+
+    await act(() =>
+      opentokMethods.initPublisher({
+        name,
+        element,
+        options,
+      })
+    );
+    [opentokProps, opentokMethods] = result.current;
+
+    expect(opentokProps).toMatchObject({
+      publisher: opentokProps.publisher,
+    });
+
+    // create a publisher already exist
+    try {
+      await act(() =>
+        opentokMethods.initPublisher({
+          name,
+          element,
+          options,
+        })
+      );
+    } catch (error) {
+      expect(error);
+    }
+  });
+
+  it('removePublisher', async () => {
+    const { name, element, options } = MOCK_INIT_PUBLISHER;
+    const { result } = renderHook(() => reactUseOpentok());
+    let [opentokProps, opentokMethods] = result.current;
+    await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
+    [opentokProps, opentokMethods] = result.current;
+
+    // remove a publisher not existed
+    try {
+      await act(() =>
+        opentokMethods.removePublisher({
+          name,
+        })
+      );
+    } catch (error) {
+      expect(error);
+    }
+
+    // init a publisher
+    await act(() =>
+      opentokMethods.initPublisher({
+        name,
+        element,
+        options,
+      })
+    );
+
+    [opentokProps, opentokMethods] = result.current;
+
+    // remove a publisher
+    act(() =>
+      opentokMethods.removePublisher({
+        name,
+      })
+    );
+
+    [opentokProps, opentokMethods] = result.current;
+
+    expect(opentokProps.publisher[name]).toBeNull();
+  });
+
+  it('publish publisher', async () => {
+    const { name, element, options } = MOCK_INIT_PUBLISHER;
+    const { result } = renderHook(() => reactUseOpentok());
+    let [opentokProps, opentokMethods] = result.current;
+    await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
+
+    // publish an existed publisher
+    [opentokProps, opentokMethods] = result.current;
+    try {
+      await act(() =>
+        opentokMethods.publishPublisher({
+          name,
+        })
+      );
+    } catch (error) {
+      expect(error);
+    }
+
+    // init a publisher
+    [opentokProps, opentokMethods] = result.current;
+    await act(() =>
+      opentokMethods.initPublisher({
+        name,
+        element,
+        options,
+      })
+    );
+
+    // publish a publisher
+    [opentokProps, opentokMethods] = result.current;
+    await act(() =>
+      opentokMethods.publishPublisher({
+        name,
+      })
+    );
+
+    [opentokProps, opentokMethods] = result.current;
+    expect(opentokProps.publisher[name].stream).toEqual(MOCK_STREAM);
+  });
+
+  it('remove published publisher', async () => {
+    const { name, element, options } = MOCK_INIT_PUBLISHER;
+    const { result } = renderHook(() => reactUseOpentok());
+    let [opentokProps, opentokMethods] = result.current;
+    await act(() => opentokMethods.initSession(MOCK_CREDENTIALS));
+
+    // init a publisher
+    [opentokProps, opentokMethods] = result.current;
+    await act(() =>
+      opentokMethods.initPublisher({
+        name,
+        element,
+        options,
+      })
+    );
+
+    // publish a publisher
+    [opentokProps, opentokMethods] = result.current;
+    await act(() =>
+      opentokMethods.publishPublisher({
+        name,
+      })
+    );
+
+    [opentokProps, opentokMethods] = result.current;
+    // remove a published publisher
+    try {
+      await act(() =>
+        opentokMethods.removePublisher({
+          name,
+        })
+      );
+    } catch (error) {
+      expect(error);
+    }
   });
 });
 
